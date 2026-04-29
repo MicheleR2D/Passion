@@ -1,0 +1,133 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import LevelsSection from "../components/LevelsSection.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("pilates-reformer"))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Pilates Reformer" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "Pilates Reformer" }
+  ]} />
+
+  <Hero
+    label="03 / Control · Studio Reformer"
+    titleLine1="Reformer."
+    titleLine2="Il <em>controllo</em> sopra ogni cosa."
+    subtitle="Tre studi dedicati al Pilates Reformer, classi da massimo 7 persone, attrezzi Reformer + Tower + Chair + Cadillac. Tre livelli di programma, dal principiante al practitioner. Insegnanti certificati BASI o Polestar."
+    image="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Pilates Reformer Passion"
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "3", label: "Studi dedicati" },
+    { value: "7", label: "Persone max / classe" },
+    { value: "3", label: "Livelli di programma" },
+    { value: "9<em>—</em>20", label: "Orario classi" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Studio Reformer · Studio Reformer+"
+    text="Sette persone, tre studi, <em>nessuna</em> classe affollata. Si sente."
+    image="https://images.unsplash.com/photo-1591291621164-2c6367723315?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Studio Reformer Passion"
+    glow="bl"
+  />
+
+  <Feature
+    eyebrow="Lo Studio"
+    title="Tre <em>studi</em>, attrezzi seri, classi piccole."
+    paragraph="Studio Reformer (sei macchine), Studio Reformer+ (otto macchine + Tower wall), Studio Reformer Individuale (uno-a-uno con coach dedicato). Ogni macchina è una Balanced Body o Stott, le migliori in commercio. Manutenzione settimanale."
+    rows={[
+      { label: "Studi dedicati", value: "3" },
+      { label: "Reformer totali", value: "16" },
+      { label: "Persone max / classe", value: "7" },
+      { label: "Insegnante certificato", value: "BASI / Polestar" }
+    ]}
+    image="https://images.unsplash.com/photo-1593810451137-b88aaab51e96?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Lo studio Reformer"
+    cta={{ label: "Vedi i livelli →", href: "#livelli" }}
+    glow="tl"
+  />
+
+  <section id="livelli">
+    <LevelsSection
+      eyebrow="I Livelli"
+      title="Dal <em>principiante</em> al practitioner."
+      glow="br"
+      levels={[
+        {
+          num: "Livello 01",
+          title: "Reformer Base",
+          tag: "Per chi parte",
+          description: "Quattro settimane per conoscere la macchina, i fondamentali del metodo, la respirazione, il controllo del centro. Pensato per chi non ha mai fatto Pilates Reformer.",
+          bullets: ["2 sessioni / settimana", "Classe da max 7", "Insegnante guida", "Adatto a tutti"]
+        },
+        {
+          num: "Livello 02",
+          title: "Reformer Plus",
+          tag: "Intermedio · Avanzato",
+          description: "Per chi ha già fatto un ciclo Base. Esercizi più complessi, sequenze coreografate, lavoro su asimmetrie, integrazione con Tower e Chair. Tre sessioni a settimana.",
+          bullets: ["3 sessioni / settimana", "Tower e Chair", "Sequenze avanzate", "Lavoro su asimmetrie"]
+        },
+        {
+          num: "Livello 03",
+          title: "Personal Reformer",
+          tag: "1-on-1",
+          description: "Sessioni individuali con coach dedicato, in studio singolo. Programma costruito sulle tue esigenze: rieducazione post-infortunio, gravidanza, performance. Massima personalizzazione.",
+          bullets: ["1-on-1 con coach", "Studio individuale", "Programma su misura", "Anche post-parto / rieducazione"],
+          isPro: true
+        }
+      ]}
+    />
+  </section>
+
+  <Feature
+    eyebrow="Per chi"
+    title="Per chi <em>cerca</em> consapevolezza, non sudore."
+    paragraph="Il Pilates Reformer non è cardio. È controllo, postura, allungamento attivo, forza profonda. Funziona per chi recupera da infortuni, per chi vive seduto otto ore al giorno, per chi ha mal di schiena cronico, per chi vuole un corpo forte e mobile insieme. È serio, è metodico, dà risultati che restano."
+    rows={[
+      { label: "Recupero post-infortunio", value: "Sì" },
+      { label: "Postura ufficio", value: "Sì" },
+      { label: "Mal di schiena cronico", value: "Sì" },
+      { label: "Pre / post parto", value: "Sì" },
+      { label: "Performance sportiva", value: "Sì" }
+    ]}
+    image="https://images.unsplash.com/photo-1601629665203-f9f2b8d07f99?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Per chi è il Reformer"
+    reverse
+    glow="tr"
+  />
+
+  {testimonials.length > 0 && (
+    <TestimonialsSection
+      title="Hanno <em>cambiato</em> postura."
+      testimonials={testimonials.map((t) => t.data)}
+      glow="bl"
+    />
+  )}
+
+  <TryOut
+    eyebrow="Prova il Reformer · Gratis"
+    title="Una <em>classe</em> di prova."
+    text="Prenota una classe Reformer Base. Macchina, asciugamano e calzini antiscivolo te li forniamo noi. Quaranta minuti per capire se è la disciplina giusta per te."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+    tags={["3 studi", "Max 7 persone", "Insegnante BASI/Polestar", "Tre livelli"]}
+    glow="tl"
+  />
+</Base>

@@ -1,0 +1,228 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import LevelsSection from "../components/LevelsSection.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("personal-training"))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const steps = [
+  { num: "01", title: "Valutazione", desc: "Anamnesi, test posturale, foto di partenza, obiettivo", meta: "30 minuti · Gratis" },
+  { num: "02", title: "Programmazione", desc: "Scheda settimanale costruita sul tuo profilo reale", meta: "Aggiornata ogni 7 giorni" },
+  { num: "03", title: "Allenamento", desc: "Sessioni 1-on-1 con il trainer fianco a fianco", meta: "2 — 4 / settimana" },
+  { num: "04", title: "Risultato", desc: "Test e foto di controllo ogni 8 settimane, debrief", meta: "Documentato" }
+];
+---
+<Base title="Personal Training" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "Personal Training" }
+  ]} />
+
+  <Hero
+    label="06 / 1-on-1 · I Love My Trainer"
+    titleLine1="Personal."
+    titleLine2="L'allenamento <em>cucito</em> addosso."
+    subtitle="Un trainer dedicato, una scheda che cambia ogni settimana, un obiettivo concreto. Si allena fianco a fianco, non da bordo campo. Abbonamento alla palestra incluso, perché il programma vive sette giorni su sette."
+    image="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Personal Training I Love My Trainer"
+    ctaPrimary={{ label: "Prenota la valutazione →", href: "/#prova" }}
+    ctaSecondary={{ label: "Come funziona", href: "#metodo" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "1<em>:</em>1", label: "Trainer dedicato" },
+    { value: "7<em>/</em>7", label: "Abbonamento incluso" },
+    { value: "100<em>%</em>", label: "Scheda settimanale" },
+    { value: "30<em>′</em>", label: "Valutazione gratuita" }
+  ]} />
+
+  <Manifesto
+    eyebrow="I Love My Trainer"
+    text="Non un programma copiato, una <em>relazione</em> di lavoro. Tu, il tuo trainer, e un obiettivo scritto."
+    image="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Personal trainer Passion Fitness"
+    glow="bl"
+  />
+
+  <section id="metodo">
+    <Feature
+      eyebrow="Il Metodo"
+      title="Programmazione <em>dinamica</em>, scheda nuova ogni settimana."
+      paragraph="Niente fogli A4 plastificati uguali per sei mesi. Il programma si adatta a quello che cambia: i tuoi recuperi, gli infortuni vecchi, gli impegni della settimana, i progressi reali. Ogni domenica il trainer rivede la scheda. Ogni sessione si lavora insieme, non a distanza."
+      rows={[
+        { label: "Aggiornamento scheda", value: "Settimanale" },
+        { label: "Sessioni 1-on-1", value: "2 — 4 a settimana" },
+        { label: "Trainer si allena con te", value: "Sì, fianco a fianco" },
+        { label: "Abbonamento palestra", value: "Incluso 7/7" },
+        { label: "Valutazione iniziale", value: "Gratuita 30 min" }
+      ]}
+      image="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1400&q=80&auto=format&fit=crop"
+      imageAlt="Il metodo I Love My Trainer"
+      cta={{ label: "I 4 step del processo →", href: "#processo" }}
+      glow="tl"
+    />
+  </section>
+
+  <!-- METHOD — il processo in 4 step -->
+  <section class="section glow-br" id="processo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Il Processo</div>
+          <h2 class="reveal">Quattro step, <em>misurabili</em>.</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        {steps.map((s, i) => (
+          <div class="method-card reveal" data-delay={i % 4}>
+            <div class="method-num">{s.num}</div>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <div class="method-meta">{s.meta}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LevelsSection
+    eyebrow="I Pacchetti"
+    title="Tre <em>formule</em>, un solo metodo."
+    glow="tr"
+    levels={[
+      {
+        num: "Pacchetto 01",
+        title: "Starter",
+        tag: "Per iniziare bene",
+        description: "Otto sessioni 1-on-1 da spalmare nel mese. Ideale per chi rientra dopo una pausa, per chi vuole imparare i fondamentali in sicurezza, per chi parte da zero con un obiettivo chiaro.",
+        bullets: ["2 sessioni / settimana", "Scheda settimanale", "Abbonamento incluso", "Test iniziale + foto"]
+      },
+      {
+        num: "Pacchetto 02",
+        title: "Plus",
+        tag: "Il più scelto",
+        description: "Dodici sessioni mese, frequenza tre volte a settimana. La formula più richiesta: progressi visibili, ritmo sostenibile, costanza che funziona davvero. Per ricomposizione corporea, forza, tono.",
+        bullets: ["3 sessioni / settimana", "Scheda settimanale", "Foto e test ogni 8 sett.", "Coaching nutrizionale base"],
+        isPro: true
+      },
+      {
+        num: "Pacchetto 03",
+        title: "Pro",
+        tag: "Obiettivo specifico",
+        description: "Sedici sessioni mese, quattro a settimana. Per chi prepara una gara, un evento, un obiettivo estetico definito. Programmazione individuale spinta, monitoraggio dei carichi e dei recuperi.",
+        bullets: ["4 sessioni / settimana", "Programmazione individuale", "Test biomeccanico", "Debrief mensile"]
+      }
+    ]}
+  />
+
+  <Feature
+    eyebrow="Per chi"
+    title="Risultati <em>documentati</em>, non promessi."
+    paragraph="Foto di partenza, test di forza, plicometria. Ogni otto settimane si rifà la fotografia. Il prima e dopo non è uno slogan da bacheca social: è uno strumento di lavoro che racconta dove stiamo andando. Se i numeri non si muovono, il programma cambia."
+    rows={[
+      { label: "Vuole rimettersi in forma", value: "Sì" },
+      { label: "Ricomposizione corporea", value: "Sì" },
+      { label: "Recupero da infortunio", value: "Sì" },
+      { label: "Preparazione gara", value: "Sì" },
+      { label: "Mai allenato in vita sua", value: "Sì, perfetto" }
+    ]}
+    image="https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Risultati documentati"
+    reverse
+    glow="bl"
+  />
+
+  {testimonials.length > 0 && (
+    <TestimonialsSection
+      title="Hanno <em>cambiato</em> ritmo."
+      testimonials={testimonials.map((t) => t.data)}
+      glow="tl"
+    />
+  )}
+
+  <TryOut
+    eyebrow="Valutazione · 30 minuti"
+    title="Una <em>valutazione</em>, gratis."
+    text="Trenta minuti con un trainer per capire da dove parti e fino a dove vuoi arrivare. Anamnesi, test posturale, due chiacchiere sull'obiettivo. Senza impegno, senza vendite."
+    ctaPrimary={{ label: "Prenota la valutazione →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi tutte le discipline", href: "/corsi" }}
+    tags={["I Love My Trainer", "Scheda settimanale", "Abbonamento incluso", "Trainer fianco a fianco", "Risultati documentati"]}
+    glow="br"
+  />
+</Base>
+
+<style>
+  .method-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .method-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .16) 0%, rgba(225, 29, 46, .04) 100%);
+    border: 1px solid rgba(225, 29, 46, .28);
+    padding: clamp(20px, 2.4vw, 28px);
+    position: relative;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .method-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225, 29, 46, .22) 0%, rgba(225, 29, 46, .06) 100%);
+  }
+  .method-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 48px; height: 3px;
+    background: var(--c-accent);
+  }
+  .method-num {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(38px, 4vw, 56px);
+    line-height: .95;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .method-card h3 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(17px, 1.7vw, 21px);
+    letter-spacing: -.01em;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .method-card p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, .85);
+    line-height: 1.5;
+    font-family: var(--f-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .method-meta {
+    margin-top: 10px;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+  @media (max-width: 900px) { .method-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .method-grid { grid-template-columns: 1fr; } }
+</style>

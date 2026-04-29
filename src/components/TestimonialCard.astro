@@ -1,0 +1,21 @@
+---
+interface Props {
+  quote: string;
+  initials: string;
+  name: string;
+  role: string;
+  delay?: number;
+}
+const { quote, initials, name, role, delay = 0 } = Astro.props;
+---
+<div class="testi-card reveal" data-delay={delay > 0 ? String(delay) : undefined}>
+  <div class="testi-stars">★★★★★</div>
+  <div class="testi-quote">{quote}</div>
+  <div class="testi-author">
+    <div class="testi-avatar">{initials}</div>
+    <div class="testi-meta">
+      <div class="testi-name">{name}</div>
+      <div class="testi-role">{role}</div>
+    </div>
+  </div>
+</div>

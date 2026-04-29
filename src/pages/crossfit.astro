@@ -1,0 +1,204 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("crossfit"))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="CrossFit Acquedotti" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "CrossFit Acquedotti" }
+  ]} />
+
+  <Hero
+    label="04 / Intensity · Box CrossFit Acquedotti"
+    titleLine1="CrossFit."
+    titleLine2="Otto persone, <em>un</em> coach, sessanta minuti."
+    subtitle="Box affiliato CrossFit con classi da massimo 8 atleti, coach certificati, programmazione progressiva. Warm-up, skill, WOD, cool-down: ogni classe ha la sua struttura, ogni settimana ha il suo focus."
+    image="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="CrossFit Acquedotti Passion"
+    ctaPrimary={{ label: "Prenota Free Intro →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "8", label: "Atleti max / classe" },
+    { value: "20<em>+</em>", label: "Classi / settimana" },
+    { value: "3", label: "Coach certificati" },
+    { value: "7<em>—</em>21", label: "Orario classi" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Box affiliato · Acquedotti"
+    text="Otto atleti, un coach, sessanta minuti: il CrossFit fatto come <em>dovrebbe</em> essere fatto."
+    image="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Box CrossFit Passion"
+    glow="bl"
+  />
+
+  <Feature
+    eyebrow="Il Metodo"
+    title="Forza, <em>condizionamento</em>, tecnica. Tutto insieme."
+    paragraph="CrossFit è una metodologia che combina movimenti dell'olimpia (snatch, clean), powerlifting (squat, panca, stacco), ginnastica artistica (pull-up, muscle-up, handstand) e cardio (corsa, vogatore, ski erg). La classe segue un'architettura precisa: warm-up dinamico, skill o forza, WOD (Workout of the Day), cool-down."
+    rows={[
+      { label: "Atleti max / classe", value: "8" },
+      { label: "Durata classe", value: "60 min" },
+      { label: "Struttura classe", value: "Warm-up · Skill · WOD · Cool-down" },
+      { label: "Coach certificati", value: "CF-L1 / L2 / L3" },
+      { label: "Programmazione", value: "Settimanale · ciclica" }
+    ]}
+    image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Il metodo CrossFit"
+    cta={{ label: "Vedi una settimana tipo →", href: "#wod" }}
+    glow="tl"
+  />
+
+  <!-- WOD WEEK SAMPLE -->
+  <section class="section glow-br" id="wod">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Settimana Tipo</div>
+          <h2 class="reveal">Tre WOD, <em>tre</em> focus.</h2>
+        </div>
+      </div>
+      <div class="wod-grid">
+        <div class="wod-card reveal">
+          <div class="wod-day">Lunedì</div>
+          <h3>Strength Day</h3>
+          <div class="wod-body">
+            <p><strong>Skill (15')</strong><br>Back Squat — 5×5 @ 80% 1RM</p>
+            <p><strong>WOD (20')</strong><br>5 round AMRAP:<br>10 Wall Ball<br>15 Box Jump<br>20 Cal Row</p>
+          </div>
+        </div>
+        <div class="wod-card reveal" data-delay="1">
+          <div class="wod-day">Mercoledì</div>
+          <h3>Olympic Lifting</h3>
+          <div class="wod-body">
+            <p><strong>Skill (20')</strong><br>Snatch tecnica + 5×3 @ 70%</p>
+            <p><strong>WOD (15')</strong><br>EMOM 12':<br>min 1: 3 Power Snatch<br>min 2: 8 Toes-to-Bar</p>
+          </div>
+        </div>
+        <div class="wod-card reveal" data-delay="2">
+          <div class="wod-day">Venerdì</div>
+          <h3>Conditioning</h3>
+          <div class="wod-body">
+            <p><strong>Skill (10')</strong><br>Double Under tecnica + 3×30''</p>
+            <p><strong>WOD (25')</strong><br>For time:<br>800m run<br>50 Burpee<br>40 KB Swing<br>30 Pull-up<br>800m run</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Feature
+    eyebrow="Free Intro"
+    title="<em>Free Intro</em>: la prima classe è gratis."
+    paragraph="Prima di iniziare un percorso, vieni a una classe di prova. Nessun impegno, nessun upselling: una classe vera, con un coach che ti accompagna passo passo, ti spiega gli scaling, ti fa provare i movimenti. Quaranta minuti per capire se è la tua disciplina."
+    rows={[
+      { label: "Durata Free Intro", value: "60 min" },
+      { label: "Costo", value: "Gratis" },
+      { label: "Numero atleti", value: "Max 8" },
+      { label: "Coach dedicato", value: "Sì" }
+    ]}
+    image="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Free intro CrossFit"
+    reverse
+    glow="bl"
+  />
+
+  {testimonials.length > 0 && (
+    <TestimonialsSection
+      title="Hanno <em>iniziato</em> al box."
+      testimonials={testimonials.map((t) => t.data)}
+      glow="tl"
+    />
+  )}
+
+  <TryOut
+    eyebrow="Free Intro · Gratis"
+    title="Vieni a <em>provare</em> il box."
+    text="Una classe di prova, gratuita, con un coach dedicato. Ti spieghiamo i fondamentali, ti facciamo provare gli scaling, capisci se è la tua disciplina. Senza impegno, senza pressione."
+    ctaPrimary={{ label: "Prenota Free Intro →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+    tags={["Box affiliato", "Max 8 atleti", "Coach certificati", "Free Intro gratis"]}
+    glow="br"
+  />
+</Base>
+
+<style>
+  .wod-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .wod-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .16) 0%, rgba(225, 29, 46, .04) 100%);
+    border: 1px solid rgba(225, 29, 46, .28);
+    padding: clamp(26px, 3vw, 36px);
+    position: relative;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .wod-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225, 29, 46, .22) 0%, rgba(225, 29, 46, .06) 100%);
+  }
+  .wod-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 48px; height: 3px;
+    background: var(--c-accent);
+  }
+  .wod-day {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 12px;
+  }
+  .wod-card h3 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1;
+    letter-spacing: -.01em;
+    margin-bottom: 22px;
+    color: #fff;
+  }
+  .wod-body p {
+    color: rgba(255, 255, 255, .85);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    font-family: var(--f-body);
+  }
+  .wod-body strong {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  @media (max-width: 900px) {
+    .wod-grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+</style>

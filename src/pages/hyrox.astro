@@ -1,0 +1,213 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import LevelsSection from "../components/LevelsSection.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("hyrox"))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const stations = [
+  { num: "01", name: "Sky Erg", desc: "1000 metri sci ergometro" },
+  { num: "02", name: "Sled Push", desc: "50 metri spinta slitta caricata" },
+  { num: "03", name: "Sled Pull", desc: "50 metri trascinamento slitta" },
+  { num: "04", name: "Burpee Broad Jump", desc: "80 metri burpee in avanzamento" },
+  { num: "05", name: "Rowing", desc: "1000 metri concept 2" },
+  { num: "06", name: "Farmers Carry", desc: "200 metri trasporto pesi" },
+  { num: "07", name: "Sandbag Lunges", desc: "100 metri affondi con sandbag" },
+  { num: "08", name: "Wall Balls", desc: "75 (donne) / 100 (uomini)" }
+];
+---
+<Base title="Hyrox Training" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "Hyrox Training" }
+  ]} />
+
+  <Hero
+    label="05 / Race · Hyrox Affiliated Gym"
+    titleLine1="Hyrox."
+    titleLine2="Il <em>mondiale</em> del fitness racing."
+    subtitle="Otto round da un chilometro di corsa intervallati a otto workout funzionali standardizzati. Il format di fitness racing più diffuso al mondo, allenato su sled track regolamentare, programmazione progressiva dal principiante al competitor."
+    image="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Hyrox Affiliated Gym Roma Tuscolana"
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Capire la gara", href: "#race" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "8<em>×</em>1", label: "Km di corsa" },
+    { value: "8", label: "Stazioni funzionali" },
+    { value: "1550", label: "Cm sled track regol.", count: true },
+    { value: "3", label: "Livelli di programma" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Hyrox Affiliated Gym"
+    text="Misurabile, ripetibile, <em>onesto</em>: tu, il cronometro e gli stessi otto esercizi."
+    image="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Hyrox training Passion"
+    glow="bl"
+  />
+
+  <Feature
+    eyebrow="Il Format"
+    title="Una <em>gara</em> uguale per tutti, in tutto il mondo."
+    paragraph="Hyrox è una competizione standardizzata che combina endurance e forza. Otto chilometri di corsa indoor, intervallati da otto stazioni di workout funzionali eseguiti sempre nello stesso ordine, con gli stessi carichi. La gara dura tra i 50 e i 90 minuti, a seconda del livello. Si fa Single, in Doppio o a Squadre."
+    rows={[
+      { label: "Distanza totale corsa", value: "8 km" },
+      { label: "Workout funzionali", value: "8 stazioni" },
+      { label: "Tempo medio competitor", value: "60 — 75 min" },
+      { label: "Categorie", value: "Single · Doubles · Relay" },
+      { label: "Versioni", value: "Open · Pro · Adaptive" }
+    ]}
+    image="https://images.unsplash.com/photo-1570829460005-c840387bb1ca?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Cosa è Hyrox"
+    cta={{ label: "Vedi gli 8 round →", href: "#race" }}
+    glow="tl"
+  />
+
+  <!-- RACE — gli 8 round -->
+  <section class="section glow-br" id="race">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Gli 8 Round</div>
+          <h2 class="reveal">Otto stazioni, <em>sempre</em> le stesse.</h2>
+        </div>
+      </div>
+      <div class="race-grid">
+        {stations.map((s, i) => (
+          <div class="race-card reveal" data-delay={i % 4}>
+            <div class="race-num">{s.num}</div>
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+            <div class="race-meta">Round {s.num.replace(/^0/, "")}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <LevelsSection
+    eyebrow="I Programmi"
+    title="Dal <em>principiante</em> al competitor."
+    glow="tr"
+    levels={[
+      {
+        num: "Programma 01",
+        title: "Hyrox Discover",
+        tag: "Per chi parte da zero",
+        description: "Quattro settimane per conoscere il format. Tecnica delle otto stazioni, ritmo running base, gestione dello sforzo. Pensato per chi non ha mai fatto una gara di endurance.",
+        bullets: ["2 sessioni / settimana", "Tecnica + condizionamento", "Test finale Hyrox simulato", "Adatto a tutti"]
+      },
+      {
+        num: "Programma 02",
+        title: "Hyrox Group",
+        tag: "Allenamento di gruppo",
+        description: "Tre sessioni a settimana di group training Hyrox. Strength + Compromised running + Race simulation. La community che corre insieme, l'allenamento che progredisce.",
+        bullets: ["3 sessioni / settimana", "Group max 12 atleti", "Race simulation mensile", "Coach affiliato Hyrox"]
+      },
+      {
+        num: "Programma 03",
+        title: "Hyrox Competitor",
+        tag: "Programma individuale",
+        description: "Per chi vuole gareggiare ai Hyrox World, qualificarsi agli Europei o migliorare il proprio Pro time. Programmazione individuale, settimanale, dati di running monitorati.",
+        bullets: ["Programmazione individuale", "Test biomeccanico iniziale", "Coach dedicato 1-on-1", "Race prep verso eventi target"],
+        isPro: true
+      }
+    ]}
+  />
+
+  {testimonials.length > 0 && (
+    <TestimonialsSection
+      title="Hanno <em>finito</em> la gara."
+      testimonials={testimonials.map((t) => t.data)}
+      glow="bl"
+    />
+  )}
+
+  <TryOut
+    eyebrow="Hyrox Affiliated Gym"
+    title="Una <em>simulazione</em>, gratis."
+    text="Vieni in palestra, fai una mini-Hyrox guidata da un coach. Capirai dove sei e dove puoi arrivare. Quaranta minuti di lavoro, gratuiti."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi tutte le discipline", href: "/corsi" }}
+    tags={["Affiliated Gym", "Sled track 15.50m", "Programmi 3 livelli", "Coach certificati"]}
+    glow="tl"
+  />
+</Base>
+
+<style>
+  .race-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .race-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .16) 0%, rgba(225, 29, 46, .04) 100%);
+    border: 1px solid rgba(225, 29, 46, .28);
+    padding: clamp(20px, 2.4vw, 28px);
+    position: relative;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .race-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225, 29, 46, .22) 0%, rgba(225, 29, 46, .06) 100%);
+  }
+  .race-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 48px; height: 3px;
+    background: var(--c-accent);
+  }
+  .race-num {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(38px, 4vw, 56px);
+    line-height: .95;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .race-card h3 {
+    font-family: var(--f-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(17px, 1.7vw, 21px);
+    letter-spacing: -.01em;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .race-card p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, .85);
+    line-height: 1.5;
+    font-family: var(--f-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .race-meta {
+    margin-top: 10px;
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+  @media (max-width: 900px) { .race-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .race-grid { grid-template-columns: 1fr; } }
+</style>

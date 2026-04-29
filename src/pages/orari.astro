@@ -1,0 +1,233 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import TryOut from "../components/TryOut.astro";
+import { getCollection } from "astro:content";
+
+const days = (await getCollection("orari")).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Orari" active="orari">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Orari" }
+  ]} />
+
+  <Hero
+    label="Pianifica la tua routine"
+    titleLine1="Orari."
+    titleLine2="Tutto il <em>fitness</em> alle tue ore."
+    subtitle="La palestra è aperta ogni giorno dalle 5:00 alle 24:00. Il planning corsi cambia ogni mese: trovi 250+ ore di lezioni in tutte le discipline. Prenotazioni dall'app o dall'area riservata."
+    image="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Orari Passion Fitness Tuscolana"
+    ctaPrimary={{ label: "Vedi il planning →", href: "#planning" }}
+    ctaSecondary={{ label: "Scarica gli orari", href: "#download" }}
+  />
+
+  <Stats stats={[
+    { value: "250<em>+</em>", label: "Ore lezioni / mese" },
+    { value: "66", label: "Lezioni / settimana" },
+    { value: "7<em>/</em>7", label: "Giorni aperti" },
+    { value: "5<em>—</em>24", label: "Orario continuato" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Orari · Pianifica la tua routine"
+    text="Cinque del mattino, mezzanotte, e <em>tutto</em> quello che c'è in mezzo."
+    image="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Orari aperti ogni giorno Passion Fitness"
+    glow="bl"
+  />
+
+  <!-- PLANNING SETTIMANALE -->
+  <section class="planning section glow-tl" id="planning">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Planning · Settimana tipo</div>
+          <h2 class="reveal">La tua <em>settimana</em>, ora per ora.</h2>
+        </div>
+        <div class="planning-tabs reveal" data-delay="1" role="tablist">
+          <button class="is-on" data-filter="all">Tutti</button>
+          <button data-filter="rebalance">Rebalance</button>
+          <button data-filter="energy">Energy</button>
+          <button data-filter="reformer">Reformer</button>
+          <button data-filter="crossfit">CrossFit</button>
+          <button data-filter="hyrox">Hyrox</button>
+        </div>
+      </div>
+
+      <div class="planning-grid reveal">
+        {days.map((d) => (
+          <div class="day-col">
+            <div class="day-name">{d.data.dayLabel}<span>{d.data.fullName}</span></div>
+            {d.data.classes.map((c) => (
+              <div class="class-card" data-discipline={c.discipline}>
+                <div class="class-time">{c.time}</div>
+                <div class="class-name">{c.name}</div>
+                <div class="class-meta">{c.room} · {c.duration}</div>
+                <span class:list={["disc-chip", `disc-${c.discipline}`]}>{c.discipline}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div class="planning-legend reveal" data-delay="1">
+        <span class="key"><span class="dot legend-rebalance"></span>Rebalance · 150 mq</span>
+        <span class="key"><span class="dot legend-energy"></span>Energy · 250 mq</span>
+        <span class="key"><span class="dot legend-reformer"></span>Studio Reformer</span>
+        <span class="key"><span class="dot legend-crossfit"></span>Box CrossFit</span>
+        <span class="key"><span class="dot legend-hyrox"></span>Sled Track Hyrox</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section class="download section glow-br" id="download">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Scarica gli orari</div>
+          <h2 class="reveal">Il <em>PDF</em> che ti porti dietro.</h2>
+        </div>
+        <div class="reveal" data-delay="1" style="font-family:var(--f-display);text-transform:uppercase;letter-spacing:.10em;font-size:13px;font-weight:700;color:rgba(255,255,255,.65);max-width:36ch;text-align:right">Aggiornati ogni mese · Stampa-friendly · Sempre l'ultima versione</div>
+      </div>
+      <div class="download-grid">
+        <a href="#" class="dl-card reveal">
+          <div class="dl-icon"><svg viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M3 17v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/></svg></div>
+          <h3>Sala Pesi</h3>
+          <p>Open dalle 5:00 alle 24:00, sette giorni su sette. Aree Cardio, Pesi, Calisthenics, Boxing.</p>
+          <div class="dl-meta">Scarica PDF →</div>
+        </a>
+        <a href="#" class="dl-card reveal" data-delay="1">
+          <div class="dl-icon"><svg viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M3 17v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/></svg></div>
+          <h3>Corsi Fitness</h3>
+          <p>Sala Rebalance 150 mq + Sala Energy 250 mq. 66 lezioni a settimana, tutti i livelli.</p>
+          <div class="dl-meta">Scarica PDF →</div>
+        </a>
+        <a href="#" class="dl-card reveal" data-delay="2">
+          <div class="dl-icon"><svg viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M3 17v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/></svg></div>
+          <h3>Reformer Pilates</h3>
+          <p>Tre studi dedicati, classi da massimo 7 persone. Base, Plus e Personal Reformer.</p>
+          <div class="dl-meta">Scarica PDF →</div>
+        </a>
+        <a href="#" class="dl-card reveal" data-delay="3">
+          <div class="dl-icon"><svg viewBox="0 0 24 24"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/><path d="M3 17v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/></svg></div>
+          <h3>CrossFit & Hyrox</h3>
+          <p>Box affiliato, classi max 8 atleti. Hyrox Affiliated Gym con sled track 15.50 m.</p>
+          <div class="dl-meta">Scarica PDF →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VARIAZIONI -->
+  <section class="seasonal section glow-tr">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Variazioni & Avvisi</div>
+          <h2 class="reveal">Quando il <em>planning</em> cambia.</h2>
+        </div>
+      </div>
+      <div class="seasonal-grid">
+        <div class="seas-card reveal">
+          <h3>Periodo estivo · Giugno-Settembre</h3>
+          <p>Durante l'estate il planning può subire variazioni con riduzione di orari e giorni di alcune lezioni. Le modifiche sono pubblicate in App e nell'area riservata almeno due settimane prima.</p>
+        </div>
+        <div class="seas-card reveal" data-delay="1">
+          <h3>Festività &amp; Ponti</h3>
+          <p>La palestra resta aperta nei giorni festivi con orari ridotti. Sala Pesi sempre disponibile. Le lezioni di gruppo possono essere sospese o riprogrammate, comunicato via App.</p>
+        </div>
+        <div class="seas-card reveal" data-delay="2">
+          <h3>Sospensione abbonamento</h3>
+          <p>Se sospendi l'abbonamento (15€/mese solare) le tue prenotazioni vengono congelate. Le sospensioni partono dal primo giorno del mese, vanno richieste almeno 10 giorni prima.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TryOut
+    eyebrow="Prova la palestra · Gratis"
+    title="Vieni a <em>vedere</em> il planning dal vivo."
+    text="Prenota una visita guidata o una lezione di prova gratuita. Ti facciamo vedere le sale, ti spieghiamo come si prenota, e provi una classe a scelta. Nessun impegno."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi tutte le discipline", href: "/corsi" }}
+    tags={["Aperti 7/7", "5:00 — 24:00", "250+ ore/mese", "App di prenotazione", "66 lezioni/settimana"]}
+    glow="bl"
+  />
+</Base>
+
+<script>
+  // Filter planning by discipline
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".planning-tabs button");
+  const cards = document.querySelectorAll<HTMLElement>(".class-card");
+  tabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const f = btn.dataset.filter;
+      tabs.forEach((b) => b.classList.remove("is-on"));
+      btn.classList.add("is-on");
+      cards.forEach((c) => {
+        const show = f === "all" || c.dataset.discipline === f;
+        (c as HTMLElement).style.display = show ? "" : "none";
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Planning */
+  .planning-tabs { display: flex; flex-wrap: wrap; gap: 6px; background: rgba(255,255,255,.04); border: 1px solid var(--c-line-2); border-radius: 60px; padding: 6px; align-self: flex-start; }
+  .planning-tabs button { font-family: var(--f-display); text-transform: uppercase; font-weight: 800; font-size: 12px; letter-spacing: .14em; padding: 10px 18px; border-radius: 60px; color: rgba(255,255,255,.7); transition: background .25s, color .25s; white-space: nowrap; }
+  .planning-tabs button.is-on { background: var(--c-accent); color: #fff; }
+  .planning-tabs button:not(.is-on):hover { color: #fff; }
+
+  .planning-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  .day-col { background: linear-gradient(180deg, rgba(255,255,255,.02), transparent); border: 1px solid var(--c-line-2); padding: 14px 10px; display: flex; flex-direction: column; gap: 6px; min-height: 180px; }
+  .day-name { font-family: var(--f-display); text-transform: uppercase; font-weight: 900; font-size: 13px; letter-spacing: .18em; color: var(--c-accent); padding-bottom: 10px; border-bottom: 1px solid var(--c-line); margin-bottom: 6px; }
+  .day-name span { display: block; font-size: 11px; color: var(--c-muted); font-weight: 600; letter-spacing: .10em; margin-top: 2px; }
+  .class-card { background: linear-gradient(140deg, rgba(225,29,46,.12) 0%, rgba(225,29,46,.02) 100%); border: 1px solid rgba(225,29,46,.22); padding: 10px 11px; display: flex; flex-direction: column; gap: 3px; transition: border-color .2s, background .2s, transform .2s; }
+  .class-card:hover { border-color: var(--c-accent); background: linear-gradient(140deg, rgba(225,29,46,.20) 0%, rgba(225,29,46,.05) 100%); transform: translateX(2px); }
+  .class-time { font-family: var(--f-display); font-weight: 800; font-size: 13px; color: #fff; }
+  .class-name { font-family: var(--f-display); font-weight: 700; font-size: 13px; line-height: 1.15; color: #fff; text-transform: uppercase; }
+  .class-meta { font-family: var(--f-display); font-weight: 600; font-size: 10px; letter-spacing: .10em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-top: 1px; }
+  .disc-chip { display: inline-block; font-family: var(--f-display); font-weight: 800; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border-radius: 20px; margin-top: 4px; align-self: flex-start; border: 1px solid; line-height: 1.4; }
+  .disc-rebalance { background: rgba(122,182,72,.15); color: #9CD371; border-color: rgba(122,182,72,.4); }
+  .disc-energy { background: rgba(225,29,46,.18); color: #FF8A95; border-color: rgba(225,29,46,.4); }
+  .disc-crossfit { background: rgba(255,255,255,.06); color: #fff; border-color: rgba(255,255,255,.3); }
+  .disc-reformer { background: rgba(255,193,7,.12); color: #FFD659; border-color: rgba(255,193,7,.35); }
+  .disc-hyrox { background: rgba(225,29,46,.32); color: #fff; border-color: var(--c-accent); }
+  .planning-legend { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 14px; font-family: var(--f-display); text-transform: uppercase; font-size: 11px; letter-spacing: .12em; color: var(--c-muted); font-weight: 600; }
+  .planning-legend .key { display: inline-flex; align-items: center; gap: 6px; }
+  .planning-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .legend-rebalance { background: #9CD371; }
+  .legend-energy { background: #FF8A95; }
+  .legend-crossfit { background: #fff; }
+  .legend-reformer { background: #FFD659; }
+  .legend-hyrox { background: var(--c-accent); }
+  @media (max-width: 1100px) { .planning-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .planning-grid { grid-template-columns: 1fr; } }
+
+  /* Download */
+  .download-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .dl-card { background: linear-gradient(140deg, rgba(225,29,46,.16) 0%, rgba(225,29,46,.04) 100%); border: 1px solid rgba(225,29,46,.28); padding: clamp(22px,2.5vw,30px); position: relative; transition: border-color .25s, transform .25s, background .25s; display: flex; flex-direction: column; text-decoration: none; }
+  .dl-card:hover { border-color: var(--c-accent); transform: translateY(-4px); background: linear-gradient(140deg, rgba(225,29,46,.24) 0%, rgba(225,29,46,.06) 100%); }
+  .dl-card::before { content: ""; position: absolute; top: 0; left: 0; width: 42px; height: 3px; background: var(--c-accent); }
+  .dl-icon { width: 38px; height: 38px; border: 1.5px solid var(--c-accent); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; border-radius: 50%; }
+  .dl-icon svg { width: 18px; height: 18px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .dl-card h3 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(20px,2vw,26px); margin-bottom: 8px; color: #fff; line-height: 1; }
+  .dl-card p { font-size: 13px; color: rgba(255,255,255,.78); margin-bottom: 18px; flex: 1; line-height: 1.5; }
+  .dl-meta { font-family: var(--f-display); text-transform: uppercase; letter-spacing: .14em; font-size: 11px; color: var(--c-accent); font-weight: 800; margin-top: auto; }
+  @media (max-width: 900px) { .download-grid { grid-template-columns: repeat(2,1fr); } }
+
+  /* Seasonal */
+  .seasonal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .seas-card { background: linear-gradient(140deg, rgba(225,29,46,.10) 0%, rgba(225,29,46,.02) 100%); border: 1px solid rgba(225,29,46,.22); padding: clamp(22px,2.5vw,30px); position: relative; }
+  .seas-card::before { content: ""; position: absolute; top: 0; left: 0; width: 38px; height: 3px; background: var(--c-accent); }
+  .seas-card h3 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(18px,1.8vw,22px); margin-bottom: 10px; color: #fff; line-height: 1.05; }
+  .seas-card p { font-size: 13.5px; color: rgba(255,255,255,.78); line-height: 1.55; }
+  @media (max-width: 900px) { .seasonal-grid { grid-template-columns: 1fr; } }
+</style>

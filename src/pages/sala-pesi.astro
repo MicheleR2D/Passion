@@ -1,0 +1,133 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import LevelsSection from "../components/LevelsSection.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("sala-pesi"))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Sala Pesi" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "Sala Pesi" }
+  ]} />
+
+  <Hero
+    label="01 / Strength · Sala Pesi"
+    titleLine1="Sala Pesi."
+    titleLine2="Mille metri, <em>nessuna</em> attesa."
+    subtitle="1000+ mq attrezzati Technogym, 95+ macchine, 14 treadmill, aree free weight, calisthenics e booty. La sala più grande dei quartieri Tuscolana, Cinecittà, Don Bosco. Aperta dalle 5 alle 24."
+    image="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Sala Pesi Passion Fitness Tuscolana"
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "1000<em>+</em>", label: "Mq attrezzati" },
+    { value: "95<em>+</em>", label: "Macchine Technogym" },
+    { value: "14", label: "Treadmill" },
+    { value: "5<em>—</em>24", label: "Orario continuato" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Sala Pesi · Tuscolana"
+    text="La sala che <em>non aspetta</em>: spazio, attrezzi seri, gente che fa sul serio."
+    image="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Sala Pesi Passion"
+    glow="bl"
+  />
+
+  <Feature
+    eyebrow="Il Metodo"
+    title="Cardio, pesi, calisthenics. <em>Senza</em> compromessi."
+    paragraph="La sala pesi è organizzata in macroaree: Cardio (14 treadmill, bike, ellittiche, ski erg, vogatori), Pesi/Isotonica Technogym, Calisthenics con strutture certificate, Booty area dedicata, Boxing area, Power Plate. Ogni area è dimensionata per non aspettare anche di sera."
+    rows={[
+      { label: "Macchine Technogym", value: "95+" },
+      { label: "Treadmill", value: "14" },
+      { label: "Aree dedicate", value: "5" },
+      { label: "Pesi liberi (kg max)", value: "60" },
+      { label: "Trainer in sala", value: "Sempre" }
+    ]}
+    image="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Aree sala pesi"
+    cta={{ label: "Vedi i programmi →", href: "#programmi" }}
+    glow="tl"
+  />
+
+  <section id="programmi">
+    <LevelsSection
+      eyebrow="I Programmi"
+      title="Dal <em>primo</em> giorno al primo PR."
+      glow="br"
+      levels={[
+        {
+          num: "Programma 01",
+          title: "Beginner",
+          tag: "Per chi parte da zero",
+          description: "Quattro settimane per imparare i fondamentali: tecnica, respirazione, gestione del carico. Programma costruito sul tuo profilo dopo una valutazione gratuita iniziale.",
+          bullets: ["Valutazione iniziale", "Scheda 4 settimane", "Trainer dedicato", "Test di controllo"]
+        },
+        {
+          num: "Programma 02",
+          title: "Tono & Forma",
+          tag: "Ricomposizione corporea",
+          description: "Programma a tre fasi per ricomposizione corporea, perdita di grasso, aumento del tono muscolare. Combinazione di pesi, cardio mirato e mobilità.",
+          bullets: ["12 settimane", "3-4 sessioni / settimana", "Foto e plicometria", "Coaching nutrizionale"],
+          isPro: true
+        },
+        {
+          num: "Programma 03",
+          title: "Strength",
+          tag: "Forza pura",
+          description: "Programmazione di forza orientata a squat, panca, stacco. Periodi di accumulo, intensificazione, scarico. Per chi vuole mettere ferro sotto la barra.",
+          bullets: ["Periodizzazione 12-16 sett.", "Test 1RM iniziali", "Tecnica filmata e debrief", "Programma individuale"]
+        }
+      ]}
+    />
+  </section>
+
+  <Feature
+    eyebrow="Free Weight Area"
+    title="Pesi <em>liberi</em>, spazio vero."
+    paragraph="Squat rack multiple, panca piana e inclinata, manubri fino a 60 kg, bilancieri olimpici, parallele, anelli, sacchi da boxe. La free weight area è progettata per non sentirsi mai stretti, anche nelle ore di punta."
+    rows={[
+      { label: "Squat rack", value: "4" },
+      { label: "Panca piana / inclinata", value: "6" },
+      { label: "Manubri kg max", value: "60" },
+      { label: "Bilancieri olimpici", value: "8" }
+    ]}
+    image="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Free weight area Passion"
+    reverse
+    glow="bl"
+  />
+
+  {testimonials.length > 0 && (
+    <TestimonialsSection
+      title="Chi <em>si allena</em> in sala."
+      testimonials={testimonials.map((t) => t.data)}
+      glow="tl"
+    />
+  )}
+
+  <TryOut
+    eyebrow="Prova la sala · Gratis"
+    title="Vieni a <em>vedere</em> la sala."
+    text="Una visita guidata, ti facciamo vedere le aree, gli attrezzi, ti spieghiamo come funziona. Zero impegno, zero pressione: vieni, guardi, decidi."
+    ctaPrimary={{ label: "Prenota la visita →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi le altre discipline", href: "/corsi" }}
+    tags={["1000+ mq", "Aperti 7/7", "Trainer in sala", "5—24 orario continuato"]}
+    glow="br"
+  />
+</Base>

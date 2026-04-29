@@ -1,0 +1,161 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import TryOut from "../components/TryOut.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import { getCollection } from "astro:content";
+
+const disciplines = (await getCollection("disciplines")).sort((a, b) => a.data.order - b.data.order);
+const testimonials = (await getCollection("testimonials"))
+  .filter((t) => t.data.pages.includes("home"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+<Base title="Home" active="home">
+  <Hero
+    label="Palestra · Roma Tuscolana · Dal 1995"
+    titleLine1="Passion."
+    titleLine2="La <em>palestra</em> di quartiere."
+    subtitle="1000+ mq di sala pesi, 6 discipline, 250+ ore di lezioni al mese, aperta sette giorni su sette dalle 5 alle 24. A due passi dalla Metro A Subaugusta."
+    image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Passion Fitness Tuscolana"
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Le discipline", href: "/corsi" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "1000<em>+</em>", label: "Mq sala pesi" },
+    { value: "250<em>+</em>", label: "Ore lezioni / mese" },
+    { value: "6", label: "Discipline" },
+    { value: "5<em>—</em>24", label: "Aperti 7/7" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Tuscolana · Cinecittà · Don Bosco"
+    text="Una palestra di <em>quartiere</em>, che fa quello che le palestre dovrebbero fare. Sul serio."
+    image="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Passion Fitness Roma Tuscolana"
+    glow="bl"
+  />
+
+  <!-- LE DISCIPLINE -->
+  <section class="section glow-tl" id="discipline">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Le sei discipline</div>
+          <h2 class="reveal">Tutto il <em>fitness</em>, sotto un tetto solo.</h2>
+        </div>
+      </div>
+      <div class="discipline-grid">
+        {disciplines.map((d, i) => (
+          <a href={d.data.href} class="discipline-card reveal" data-delay={i % 3}>
+            <div class="discipline-img">
+              <img src={d.data.image} alt={d.data.title} loading="lazy">
+            </div>
+            <div class="discipline-meta">
+              <div class="discipline-eyebrow">{d.data.eyebrow}</div>
+              <h3>{d.data.title}</h3>
+              <p>{d.data.description}</p>
+              <span class="discipline-arrow">Scopri →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <TestimonialsSection
+    title="Chi <em>si allena</em> da noi."
+    testimonials={testimonials.map((t) => t.data)}
+    glow="br"
+  />
+
+  <TryOut
+    eyebrow="Prova la palestra · Gratis"
+    title="Vieni a <em>provare</em>."
+    text="Una visita guidata, una lezione di prova. Senza venditori, senza pressione. Decidi tu, dopo aver visto."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi le discipline", href: "/corsi" }}
+    tags={["Prova gratuita", "Sospensioni illimitate", "5—24 7/7", "Metro A Subaugusta"]}
+    glow="tl"
+  />
+</Base>
+
+<style>
+  .discipline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .discipline-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .14) 0%, rgba(225, 29, 46, .03) 100%);
+    border: 1px solid rgba(225, 29, 46, .25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .25s, transform .25s, background .25s;
+    text-decoration: none;
+  }
+  .discipline-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225, 29, 46, .22) 0%, rgba(225, 29, 46, .05) 100%);
+  }
+  .discipline-img {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+  .discipline-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .discipline-card:hover .discipline-img img { transform: scale(1.05); }
+  .discipline-meta {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .discipline-eyebrow {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 10px;
+  }
+  .discipline-meta h3 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(22px, 2.3vw, 28px);
+    line-height: 1;
+    letter-spacing: -.01em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .discipline-meta p {
+    color: rgba(255, 255, 255, .8);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .discipline-arrow {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+  @media (max-width: 900px) {
+    .discipline-grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+</style>

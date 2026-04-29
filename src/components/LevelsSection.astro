@@ -1,0 +1,44 @@
+---
+interface Level {
+  num: string;
+  title: string;
+  tag: string;
+  description: string;
+  bullets: string[];
+  isPro?: boolean;
+}
+interface Props {
+  eyebrow: string;
+  /** HTML allowed */
+  title: string;
+  levels: Level[];
+  glow?: "tl" | "tr" | "bl" | "br";
+}
+const { eyebrow, title, levels, glow = "br" } = Astro.props;
+---
+<section class:list={["section", glow && `glow-${glow}`]}>
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow reveal">{eyebrow}</div>
+        <h2 class="reveal" set:html={title}></h2>
+      </div>
+    </div>
+    <div class="lvl-grid">
+      {levels.map((l, i) => (
+        <div
+          class:list={["lvl-card", "reveal", l.isPro && "is-pro"]}
+          data-delay={i > 0 ? String(i) : undefined}
+        >
+          <div class="lvl-num">{l.num}</div>
+          <h3>{l.title}</h3>
+          <div class="lvl-tag">{l.tag}</div>
+          <p>{l.description}</p>
+          <ul class="lvl-list">
+            {l.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

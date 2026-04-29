@@ -1,0 +1,44 @@
+---
+interface Props {
+  label: string;
+  titleLine1: string;
+  /** HTML allowed (es: "Il <em>fitness</em> alle tue ore.") */
+  titleLine2: string;
+  subtitle?: string;
+  image: string;
+  imageAlt?: string;
+  ctaPrimary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+  tall?: boolean;
+}
+const {
+  label,
+  titleLine1,
+  titleLine2,
+  subtitle,
+  image,
+  imageAlt = "",
+  ctaPrimary,
+  ctaSecondary,
+  tall = false
+} = Astro.props;
+---
+<header class:list={["hero", tall && "hero--tall"]}>
+  <div class="hero-bg" id="heroBg">
+    <img src={image} alt={imageAlt} fetchpriority="high">
+  </div>
+  <div class="wrap">
+    <div class="hero-label">{label}</div>
+    <h1>
+      <span class="line"><span>{titleLine1}</span></span>
+      <span class="line"><span set:html={titleLine2}></span></span>
+    </h1>
+    {subtitle && <p class="hero-sub">{subtitle}</p>}
+    {(ctaPrimary || ctaSecondary) && (
+      <div class="hero-cta">
+        {ctaPrimary && <a href={ctaPrimary.href} class="btn">{ctaPrimary.label}</a>}
+        {ctaSecondary && <a href={ctaSecondary.href} class="btn btn--ghost">{ctaSecondary.label}</a>}
+      </div>
+    )}
+  </div>
+</header>

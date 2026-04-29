@@ -1,0 +1,180 @@
+# =============================================================
+# Passion Fitness Tuscolana — Decap CMS configuration
+# Pannello admin: passionfitness.it/admin/
+# Auth: Netlify Identity + Git Gateway
+# =============================================================
+
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'CMS: aggiunto {{collection}} "{{slug}}"'
+    update: 'CMS: aggiornato {{collection}} "{{slug}}"'
+    delete: 'CMS: eliminato {{collection}} "{{slug}}"'
+    uploadMedia: 'CMS: caricato media "{{path}}"'
+    deleteMedia: 'CMS: eliminato media "{{path}}"'
+
+local_backend: true  # abilita test locale via `npx decap-server` su localhost
+
+publish_mode: editorial_workflow
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://passionfitness.it
+display_url: https://passionfitness.it
+logo_url: /favicon.svg
+locale: it
+
+# =============================================================
+# COLLEZIONI
+# =============================================================
+collections:
+
+  # ----- ABBONAMENTI -----
+  - name: "abbonamenti"
+    label: "Abbonamenti"
+    label_singular: "Piano"
+    description: "I tre piani principali (Open / Sala+Corsi / Sala Pesi). Modifica prezzi, inclusi e ID Perfect Gym."
+    folder: "src/content/abbonamenti"
+    create: false
+    delete: false
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "Nome piano", name: "title", widget: "string", hint: "Es: Open, Sala + Corsi, Sala Pesi" }
+      - { label: "Tag descrittivo", name: "tag", widget: "string", hint: "Es: Tutto incluso" }
+      - { label: "Numero (per ordine)", name: "num", widget: "string", pattern: ['^[0-9]{2}$', 'Due cifre, es: 01'] }
+      - { label: "Pro / In evidenza?", name: "isPro", widget: "boolean", default: false, hint: "Se attivo, la card è graficamente evidenziata" }
+      - { label: "Prezzo 12 mesi (€/mese)", name: "price12", widget: "number", value_type: "int", min: 0 }
+      - { label: "Prezzo 4 mesi (€/mese)", name: "price4", widget: "number", value_type: "int", min: 0 }
+      - { label: "Prezzo Flex (€/mese)", name: "priceFlex", widget: "number", value_type: "int", min: 0 }
+      - { label: "Quota attivazione (€)", name: "activationFee", widget: "number", value_type: "int", default: 60 }
+      - { label: "Costo sospensione (€/mese)", name: "suspensionFee", widget: "number", value_type: "int", default: 15 }
+      - { label: "PaymentPlanId 12 mesi (Perfect Gym)", name: "paymentPlanId12", widget: "string" }
+      - { label: "PaymentPlanId 4 mesi (Perfect Gym)", name: "paymentPlanId4", widget: "string", required: false }
+      - { label: "PaymentPlanId Flex (Perfect Gym)", name: "paymentPlanIdFlex", widget: "string", required: false }
+      - { label: "Badge in evidenza", name: "badge", widget: "string", required: false, hint: "Es: Il più completo" }
+      - { label: "Ordine di visualizzazione", name: "order", widget: "number", value_type: "int", default: 1 }
+      - label: "Inclusi"
+        name: "included"
+        widget: "list"
+        hint: "Una riga per voce inclusa nel piano"
+      - { label: "Note (markdown opzionale)", name: "body", widget: "markdown", required: false }
+
+  # ----- ORARI -----
+  - name: "orari"
+    label: "Planning Settimanale"
+    label_singular: "Giorno"
+    description: "Lezioni del planning settimanale. Un file per giorno (lun-dom)."
+    folder: "src/content/orari"
+    create: false
+    delete: false
+    slug: "{{fields.day}}"
+    fields:
+      - { label: "Giorno (slug)", name: "day", widget: "select", options: ["lun","mar","mer","gio","ven","sab","dom"] }
+      - { label: "Etichetta breve", name: "dayLabel", widget: "string", hint: "Es: Lun" }
+      - { label: "Nome esteso", name: "fullName", widget: "string", hint: "Es: Lunedì" }
+      - { label: "Ordine (1=Lun, 7=Dom)", name: "order", widget: "number", value_type: "int", min: 1, max: 7 }
+      - label: "Lezioni"
+        name: "classes"
+        widget: "list"
+        summary: "{{fields.time}} — {{fields.name}} ({{fields.discipline}})"
+        fields:
+          - { label: "Orario", name: "time", widget: "string", pattern: ['^[0-9]{2}:[0-9]{2}$', 'Formato HH:MM, es: 18:30'] }
+          - { label: "Nome corso", name: "name", widget: "string" }
+          - { label: "Sala", name: "room", widget: "string", hint: "Es: Sala Reb, Sala En, Studio, Box, Sled Track" }
+          - { label: "Durata", name: "duration", widget: "string", hint: "Es: 60', 50'" }
+          - { label: "Disciplina", name: "discipline", widget: "select",
+              options: [
+                { label: "Rebalance", value: "rebalance" },
+                { label: "Energy", value: "energy" },
+                { label: "Reformer", value: "reformer" },
+                { label: "CrossFit", value: "crossfit" },
+                { label: "Hyrox", value: "hyrox" }
+              ]
+            }
+
+  # ----- TESTIMONIANZE -----
+  - name: "testimonials"
+    label: "Testimonianze"
+    label_singular: "Testimonianza"
+    description: "Recensioni di clienti, distribuite sulle pagine."
+    folder: "src/content/testimonials"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome completo", name: "name", widget: "string", hint: "Es: Marco F." }
+      - { label: "Iniziali (max 3 caratteri)", name: "initials", widget: "string", pattern: ['^[A-Za-zÀ-ÿ]{1,3}$', 'Massimo 3 lettere'] }
+      - { label: "Ruolo / disciplina", name: "role", widget: "string", hint: "Es: Hyrox · 4 anni" }
+      - { label: "Citazione", name: "quote", widget: "text" }
+      - label: "Mostra su queste pagine"
+        name: "pages"
+        widget: "select"
+        multiple: true
+        options:
+          - { label: "Home", value: "home" }
+          - { label: "Sala Pesi", value: "sala-pesi" }
+          - { label: "Corsi Fitness", value: "corsi-fitness" }
+          - { label: "Pilates Reformer", value: "pilates-reformer" }
+          - { label: "CrossFit", value: "crossfit" }
+          - { label: "Hyrox", value: "hyrox" }
+          - { label: "Personal Training", value: "personal-training" }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int", default: 1 }
+
+  # ----- PERSONAL TRAINING PACKAGES -----
+  - name: "pt-packages"
+    label: "Pacchetti Personal Training"
+    label_singular: "Pacchetto PT"
+    description: "I pacchetti Personal Training (10 sedute / 5 sedute / Singola)."
+    folder: "src/content/pt-packages"
+    create: false
+    delete: false
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "Nome pacchetto", name: "title", widget: "string" }
+      - { label: "Tag descrittivo", name: "tag", widget: "string" }
+      - { label: "Numero (per ordine)", name: "num", widget: "string" }
+      - { label: "Pro / In evidenza?", name: "isPro", widget: "boolean", default: false }
+      - { label: "Validità (giorni)", name: "validityDays", widget: "number", value_type: "int" }
+      - { label: "Prezzo 60' (€)", name: "price60", widget: "number", value_type: "int" }
+      - { label: "Prezzo 40' (€)", name: "price40", widget: "number", value_type: "int" }
+      - { label: "Prezzo 30' (€)", name: "price30", widget: "number", value_type: "int" }
+      - { label: "ProductId (Perfect Gym)", name: "productId", widget: "string" }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int" }
+      - { label: "Note (opzionale)", name: "body", widget: "markdown", required: false }
+
+  # ----- DROP-IN / SINGOLI ACCESSI -----
+  - name: "drop-in"
+    label: "Singoli Accessi"
+    label_singular: "Singolo accesso"
+    description: "I singoli accessi acquistabili senza abbonamento."
+    folder: "src/content/drop-in"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome", name: "title", widget: "string" }
+      - { label: "Prezzo (€)", name: "price", widget: "number", value_type: "int" }
+      - { label: "Meta (es: Singolo accesso)", name: "meta", widget: "string" }
+      - { label: "Note descrittive", name: "note", widget: "string" }
+      - { label: "ProductId (Perfect Gym)", name: "productId", widget: "string" }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int" }
+
+  # ----- DISCIPLINES -----
+  - name: "disciplines"
+    label: "Discipline (Hub Corsi)"
+    label_singular: "Disciplina"
+    description: "Card delle discipline mostrate nel hub /corsi e nella home."
+    folder: "src/content/disciplines"
+    create: false
+    delete: false
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "Slug (URL)", name: "slug", widget: "string" }
+      - { label: "Eyebrow (es: 01 / Strength)", name: "eyebrow", widget: "string" }
+      - { label: "Titolo", name: "title", widget: "string" }
+      - { label: "Descrizione breve", name: "description", widget: "text" }
+      - { label: "Immagine URL", name: "image", widget: "string" }
+      - { label: "Link alla pagina", name: "href", widget: "string" }
+      - { label: "Ordine", name: "order", widget: "number", value_type: "int" }

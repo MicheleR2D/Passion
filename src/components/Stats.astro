@@ -1,0 +1,31 @@
+---
+interface Stat {
+  /** Numero, es: "1000", "8×1", "5—24". Può contenere <em> tags */
+  value: string;
+  /** Etichetta sotto il numero */
+  label: string;
+  /** Se true, anima da 0 fino al numero (richiede value numerico puro) */
+  count?: boolean;
+}
+interface Props {
+  stats: Stat[];
+}
+const { stats } = Astro.props;
+---
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      {stats.map((s, i) => (
+        <div class="stat reveal" data-delay={i > 0 ? String(i) : undefined}>
+          <div class="stat-num">
+            {s.count
+              ? <span class="count" data-to={s.value}>0</span>
+              : <Fragment set:html={s.value} />
+            }
+          </div>
+          <div class="stat-label">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+type Active = "home" | "corsi" | "orari" | "abbonamenti" | "";
+interface Props {
+  active?: Active;
+}
+const { active = "" } = Astro.props;
+---
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg class="logo-mark"><use href="#pf-logo"/></svg>
+      <span class="logo-text">PASSION FITNESS<small>Tuscolana · Roma</small></span>
+    </a>
+    <div class="nav-menu">
+      <a href="/corsi" class={active === "corsi" ? "is-active" : ""}>Corsi</a>
+      <a href="/orari" class={active === "orari" ? "is-active" : ""}>Orari</a>
+      <a href="/abbonamenti" class={active === "abbonamenti" ? "is-active" : ""}>Abbonamenti</a>
+    </div>
+    <div class="nav-cta"><a href="/#prova" class="btn">Prova Passion</a></div>
+  </div>
+</nav>

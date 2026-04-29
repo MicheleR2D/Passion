@@ -1,0 +1,37 @@
+---
+interface Props {
+  eyebrow: string;
+  /** HTML allowed */
+  title: string;
+  text: string;
+  ctaPrimary: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+  tags?: string[];
+  glow?: "tl" | "tr" | "bl" | "br";
+}
+const {
+  eyebrow,
+  title,
+  text,
+  ctaPrimary,
+  ctaSecondary,
+  tags = [],
+  glow = "br"
+} = Astro.props;
+---
+<section class:list={["try-out", `glow-${glow}`]}>
+  <div class="try-out-content">
+    <div class="eyebrow reveal" style="margin: 0 auto 14px; justify-content: center">{eyebrow}</div>
+    <h2 class="reveal" set:html={title}></h2>
+    <p class="reveal" data-delay="1">{text}</p>
+    <div class="try-out-cta reveal" data-delay="2">
+      <a href={ctaPrimary.href} class="btn">{ctaPrimary.label}</a>
+      {ctaSecondary && <a href={ctaSecondary.href} class="btn btn--ghost">{ctaSecondary.label}</a>}
+    </div>
+    {tags.length > 0 && (
+      <div class="try-out-tags reveal" data-delay="3">
+        {tags.map((t) => <span>{t}</span>)}
+      </div>
+    )}
+  </div>
+</section>

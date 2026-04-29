@@ -1,0 +1,226 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import Feature from "../components/Feature.astro";
+import LevelsSection from "../components/LevelsSection.astro";
+import TryOut from "../components/TryOut.astro";
+---
+<Base title="Corsi Fitness" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi", href: "/corsi" },
+    { label: "Corsi Fitness" }
+  ]} />
+
+  <Hero
+    label="02 / Classes · Sala Rebalance + Energy"
+    titleLine1="Corsi Fitness."
+    titleLine2="Sessantasei classi, <em>due</em> sale."
+    subtitle="Sala Rebalance da 150 mq per i corsi di equilibrio (Pilates, Yoga, Stretching, Posturale) e Sala Energy da 250 mq per quelli di intensità (Spinning, BodyPump, GAG, HIIT). 250+ ore di lezioni al mese."
+    image="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Corsi Fitness Passion"
+    ctaPrimary={{ label: "Vedi gli orari →", href: "/orari" }}
+    ctaSecondary={{ label: "Gli abbonamenti", href: "/abbonamenti" }}
+    tall
+  />
+
+  <Stats stats={[
+    { value: "250<em>+</em>", label: "Ore lezioni / mese" },
+    { value: "66", label: "Lezioni / settimana" },
+    { value: "2", label: "Sale dedicate" },
+    { value: "7<em>—</em>21", label: "Orario classi" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Sala Rebalance · Sala Energy"
+    text="Due sale, due <em>anime</em>. L'equilibrio e l'intensità, scegli ogni mattina cosa ti serve."
+    image="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Sala corsi Passion"
+    glow="bl"
+  />
+
+  <section class="section glow-tl">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Le Sale</div>
+          <h2 class="reveal">Due ambienti, <em>due</em> obiettivi.</h2>
+        </div>
+      </div>
+      <div class="rooms-grid">
+        <div class="room-card reveal">
+          <div class="room-img">
+            <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=1400&q=80&auto=format&fit=crop" alt="Sala Rebalance" loading="lazy">
+          </div>
+          <div class="room-meta">
+            <div class="room-eyebrow">Sala 01</div>
+            <h3>Rebalance</h3>
+            <p>150 mq dedicati a Pilates Matwork, Yoga, Stretching, Posturale, Mobility, Body Mind. Pavimento tecnico, specchi, audio attenuato. Per chi cerca equilibrio.</p>
+            <div class="room-num"><strong>150</strong> mq</div>
+          </div>
+        </div>
+        <div class="room-card reveal" data-delay="1">
+          <div class="room-img">
+            <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=1400&q=80&auto=format&fit=crop" alt="Sala Energy" loading="lazy">
+          </div>
+          <div class="room-meta">
+            <div class="room-eyebrow">Sala 02</div>
+            <h3>Energy</h3>
+            <p>250 mq di sala intensiva: Spinning con 30 bike Technogym, BodyPump, GAG, HIIT, Boxing, Functional, Step, Zumba. Audio premium, luci dinamiche.</p>
+            <div class="room-num"><strong>250</strong> mq</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <LevelsSection
+    eyebrow="I Programmi"
+    title="Sei <em>format</em> di lezione."
+    glow="br"
+    levels={[
+      {
+        num: "Format 01",
+        title: "Pilates Matwork",
+        tag: "Sala Rebalance",
+        description: "Tecnica Pilates classica a corpo libero, con tappetino e piccoli attrezzi. Postura, core, controllo del respiro. 60 minuti.",
+        bullets: ["60' classe", "Sala Rebalance", "Tutti i livelli", "Anche per chi parte da zero"]
+      },
+      {
+        num: "Format 02",
+        title: "Yoga & Mobility",
+        tag: "Sala Rebalance",
+        description: "Vinyasa, Hatha, Yin alternati durante la settimana. Mobilità, respiro, scioltezza articolare. Per recuperare dopo allenamenti intensi.",
+        bullets: ["60' classe", "Vinyasa · Hatha · Yin", "Insegnante certificato", "Tutti i livelli"]
+      },
+      {
+        num: "Format 03",
+        title: "Spinning",
+        tag: "Sala Energy",
+        description: "Indoor cycling su bike Technogym. Programmazione settimanale: resistenza, intervalli, scalate. Audio ad alta energia, motivazione del coach.",
+        bullets: ["50' classe", "30 bike Technogym", "HR monitor opzionale", "Intermedio · avanzato"]
+      },
+      {
+        num: "Format 04",
+        title: "BodyPump",
+        tag: "Sala Energy",
+        description: "Allenamento di forza con bilanciere e dischi calibrati. Coreografia su musica, alternanza di gruppi muscolari, alta densità di lavoro.",
+        bullets: ["50' classe", "Bilanciere + dischi", "Tutti i livelli", "Tono muscolare"]
+      },
+      {
+        num: "Format 05",
+        title: "Functional",
+        tag: "Sala Energy",
+        description: "Allenamento funzionale con attrezzi vari (kettlebell, sandbag, slam ball, sled). Mix di forza, cardio, agilità. Variazioni continue, mai noioso.",
+        bullets: ["50' classe", "Multi-attrezzo", "Intermedio", "Functional total body"]
+      },
+      {
+        num: "Format 06",
+        title: "GAG · HIIT · Boxing",
+        tag: "Sala Energy",
+        description: "Le lezioni \"high impact\": GAG (Gambe-Addome-Glutei), HIIT (intervalli), Boxing (tecnica + condizionamento). Tutti i giorni in pianta stabile.",
+        bullets: ["50' classe", "Bruciagrassi", "Tutti i livelli", "GAG · HIIT · Boxing"]
+      }
+    ]}
+  />
+
+  <Feature
+    eyebrow="Settimana Tipo"
+    title="<em>Sessantasei</em> lezioni, ogni settimana."
+    paragraph="Da lunedì a domenica, tre fasce: mattina (06:30-12:30), pomeriggio (14:00-17:00), sera (17:30-21:00). Distribuzione tra Rebalance ed Energy bilanciata. Le classi popolari hanno doppi turni. Calendario aggiornato mensilmente sull'app."
+    rows={[
+      { label: "Lezioni settimanali", value: "66" },
+      { label: "Fasce orarie / giorno", value: "3" },
+      { label: "Apertura / chiusura", value: "06:30 — 21:00" },
+      { label: "Calendario", value: "App + Web" }
+    ]}
+    image="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1400&q=80&auto=format&fit=crop"
+    imageAlt="Settimana tipo corsi"
+    cta={{ label: "Vedi gli orari completi →", href: "/orari" }}
+    reverse
+    glow="tr"
+  />
+
+  <TryOut
+    eyebrow="Prova un corso · Gratis"
+    title="Una <em>lezione</em>, gratis."
+    text="Prenota la prima classe, ti accogliamo, ti spieghiamo dove sono gli spogliatoi e come funziona la sala. Senza pressioni, senza upselling."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi il planning", href: "/orari" }}
+    tags={["66 lezioni / sett.", "2 sale dedicate", "Insegnanti certificati", "Tutti i livelli"]}
+    glow="bl"
+  />
+</Base>
+
+<style>
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .room-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .14) 0%, rgba(225, 29, 46, .03) 100%);
+    border: 1px solid rgba(225, 29, 46, .25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .3s, transform .3s;
+  }
+  .room-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+  }
+  .room-img { aspect-ratio: 16/9; overflow: hidden; }
+  .room-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .room-card:hover .room-img img { transform: scale(1.04); }
+  .room-meta { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+  .room-eyebrow {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 12px;
+  }
+  .room-meta h3 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(28px, 3vw, 38px);
+    line-height: 1;
+    letter-spacing: -.015em;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .room-meta p {
+    color: rgba(255, 255, 255, .82);
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .room-num {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--c-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+  .room-num strong {
+    color: #fff;
+    font-weight: 900;
+    font-size: 36px;
+  }
+  @media (max-width: 900px) {
+    .rooms-grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+</style>

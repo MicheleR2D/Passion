@@ -1,0 +1,24 @@
+---
+interface Props {
+  eyebrow: string;
+  /** HTML allowed */
+  text: string;
+  image: string;
+  imageAlt?: string;
+  glow?: "tl" | "tr" | "bl" | "br";
+}
+const { eyebrow, text, image, imageAlt = "", glow = "bl" } = Astro.props;
+---
+<section class:list={["manifesto", `glow-${glow}`]}>
+  <div class="wrap">
+    <div class="manifesto-grid">
+      <div class="manifesto-text reveal">
+        <div class="eyebrow">{eyebrow}</div>
+        <p set:html={text}></p>
+      </div>
+      <div class="manifesto-img reveal" data-delay="1">
+        <img src={image} alt={imageAlt} loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import TryOut from "../components/TryOut.astro";
+import { getCollection } from "astro:content";
+
+const disciplines = (await getCollection("disciplines")).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Corsi" active="corsi">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Corsi" }
+  ]} />
+
+  <Hero
+    label="Le sei discipline · Hub corsi"
+    titleLine1="Corsi."
+    titleLine2="Sei <em>discipline</em>, una palestra."
+    subtitle="Strength, classes, control, intensity, race, 1-on-1. Sotto lo stesso tetto. Scegli la tua, oppure cambia ogni mese: l'abbonamento Open ti porta dappertutto."
+    image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Le sei discipline di Passion Fitness Tuscolana"
+    ctaPrimary={{ label: "Vedi gli abbonamenti →", href: "/abbonamenti" }}
+    ctaSecondary={{ label: "Vedi gli orari", href: "/orari" }}
+  />
+
+  <Stats stats={[
+    { value: "6", label: "Discipline" },
+    { value: "250<em>+</em>", label: "Ore lezioni / mese" },
+    { value: "66", label: "Lezioni / settimana" },
+    { value: "1000<em>+</em>", label: "Mq totali allenamento" }
+  ]} />
+
+  <section class="section glow-bl">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Le sei discipline</div>
+          <h2 class="reveal">Scegli da <em>dove</em> partire.</h2>
+        </div>
+      </div>
+      <div class="hub-grid">
+        {disciplines.map((d, i) => (
+          <a href={d.data.href} class="hub-card reveal" data-delay={i % 3}>
+            <div class="hub-img">
+              <img src={d.data.image} alt={d.data.title} loading="lazy">
+            </div>
+            <div class="hub-meta">
+              <div class="hub-eyebrow">{d.data.eyebrow}</div>
+              <h3>{d.data.title}</h3>
+              <p>{d.data.description}</p>
+              <span class="hub-arrow">Scopri →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <TryOut
+    eyebrow="Prova la palestra · Gratis"
+    title="Una <em>lezione</em>, gratis."
+    text="Prova una qualunque delle sei discipline. Ti facciamo vedere com'è, com'è la sala, com'è il coach. Decidi dopo, senza pressione."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Gli abbonamenti", href: "/abbonamenti" }}
+    tags={["Prova gratuita", "6 discipline", "Hyrox Affiliated Gym", "Box CrossFit"]}
+    glow="br"
+  />
+</Base>
+
+<style>
+  .hub-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .hub-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .14) 0%, rgba(225, 29, 46, .03) 100%);
+    border: 1px solid rgba(225, 29, 46, .25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .hub-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225, 29, 46, .22) 0%, rgba(225, 29, 46, .05) 100%);
+  }
+  .hub-img { aspect-ratio: 16/10; overflow: hidden; }
+  .hub-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s ease;
+  }
+  .hub-card:hover .hub-img img { transform: scale(1.05); }
+  .hub-meta { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+  .hub-eyebrow {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 10px;
+  }
+  .hub-meta h3 {
+    font-family: var(--f-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: clamp(22px, 2.3vw, 28px);
+    line-height: 1;
+    letter-spacing: -.01em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .hub-meta p {
+    color: rgba(255, 255, 255, .8);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    flex: 1;
+  }
+  .hub-arrow {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+  }
+  @media (max-width: 900px) {
+    .hub-grid { grid-template-columns: 1fr; gap: 14px; }
+  }
+</style>

@@ -1,0 +1,350 @@
+---
+import Base from "../layouts/Base.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import Hero from "../components/Hero.astro";
+import Stats from "../components/Stats.astro";
+import Manifesto from "../components/Manifesto.astro";
+import TryOut from "../components/TryOut.astro";
+import { getCollection } from "astro:content";
+
+const plans = (await getCollection("abbonamenti")).sort((a, b) => a.data.order - b.data.order);
+const dropIn = (await getCollection("drop-in")).sort((a, b) => a.data.order - b.data.order);
+const ptPackages = (await getCollection("pt-packages")).sort((a, b) => a.data.order - b.data.order);
+
+const checkout = (id: string) =>
+  `https://passion.perfectgym.com/ClientPortal2/Registration/Start?clubID=1&PaymentPlanId=${id}`;
+const productLink = (id: string) =>
+  `https://passion.perfectgym.com/ClientPortal2/Registration/Start?clubID=1&productId=${id}`;
+---
+<Base title="Abbonamenti" active="abbonamenti">
+  <Breadcrumb items={[
+    { label: "Home", href: "/" },
+    { label: "Abbonamenti" }
+  ]} />
+
+  <Hero
+    label="Abbonamenti · Listini · Pacchetti"
+    titleLine1="Abbonamenti."
+    titleLine2="Il fitness <em>che ami</em>, alle tue condizioni."
+    subtitle="Tre piani, tre durate, una sola palestra. Prezzi chiari, sospensioni illimitate, possibilità di disdetta dall'area riservata. Sotto i 25 anni risparmi. Anche pacchetti Personal Training e singoli accessi."
+    image="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1800&q=80&auto=format&fit=crop"
+    imageAlt="Abbonamenti Passion Fitness Tuscolana"
+    ctaPrimary={{ label: "Scegli il piano →", href: "#piani" }}
+    ctaSecondary={{ label: "Domande frequenti", href: "#faq" }}
+  />
+
+  <Stats stats={[
+    { value: "3", label: "Piani disponibili" },
+    { value: "3", label: "Durate · 12·4·flex" },
+    { value: "60<em>€</em>", label: "Quota attivazione" },
+    { value: "∞", label: "Sospensioni · 15€/mese" }
+  ]} />
+
+  <Manifesto
+    eyebrow="Listini · Trasparenza"
+    text="Prezzi <em>onesti</em>, durata che scegli tu, niente clausole nascoste."
+    image="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1600&q=80&auto=format&fit=crop"
+    imageAlt="Abbonamenti Passion"
+    glow="bl"
+  />
+
+  <!-- I PIANI -->
+  <section class="plans glow-tl section" id="piani">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">I Piani</div>
+          <h2 class="reveal">Tre formule, <em>una sola</em> palestra.</h2>
+        </div>
+        <div class="reveal" data-delay="1" style="font-family:var(--f-display);text-transform:uppercase;letter-spacing:.10em;font-size:13px;font-weight:700;color:rgba(255,255,255,.65);max-width:36ch;text-align:right">Tutti i piani includono accesso senza limiti orari · Quota attivazione 60€ · Pagamento mensile</div>
+      </div>
+
+      <div class="plans-grid">
+        {plans.map((p, i) => (
+          <div class:list={["plan-card", "reveal", p.data.isPro && "is-pro"]} data-delay={i}>
+            <div class="plan-num">Piano {p.data.num}</div>
+            <h3>{p.data.title}</h3>
+            <div class="plan-tag">{p.data.tag}</div>
+            {p.data.badge && <div class="plan-best">{p.data.badge}</div>}
+
+            <div class="plan-price">
+              <span class="plan-price-num">{p.data.price12}</span>
+              <span class="plan-price-cur">€/mese</span>
+            </div>
+            <div class="plan-price-sub">Durata minima 12 mesi</div>
+
+            <div class="plan-altprices">
+              <div class="plan-altprices-row"><span>4 mesi</span><span class="pp">{p.data.price4} €/mese</span></div>
+              <div class="plan-altprices-row"><span>Flex · 1 mese</span><span class="pp">{p.data.priceFlex} €/mese</span></div>
+            </div>
+
+            <ul class="plan-incl">
+              {p.data.included.map((line) => <li>{line}</li>)}
+            </ul>
+
+            <div class="plan-foot">
+              <a href={checkout(p.data.paymentPlanId12)} target="_blank" rel="noopener" class="btn">Iscriviti ora →</a>
+              <div class="plan-fine">Quota attivazione {p.data.activationFee}€ · Sospensioni {p.data.suspensionFee}€/mese · Disdetta dall'area riservata al termine durata minima</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- UNDER 25 -->
+  <section class="under glow-br">
+    <div class="wrap">
+      <div class="under-card reveal">
+        <div>
+          <div class="under-eyebrow">Riservato a chi ha meno di 25 anni</div>
+          <h2>Under <em>25</em>, sconto vero.</h2>
+          <p>Stesso piano Sala Pesi + Corsi Fitness, prezzo dedicato. Aree complete, corsi Rebalance e Energy, accesso senza limiti orari. Per studenti, neolaureati, lavoratori under 25. Basta un documento al momento dell'iscrizione.</p>
+          <a href={checkout("76")} target="_blank" rel="noopener" class="btn btn--sm">Iscriviti Under 25 →</a>
+        </div>
+        <div class="under-prices">
+          <div class="under-price"><div class="pn">39 €</div><div class="pl">12 mesi · al mese</div></div>
+          <div class="under-price"><div class="pn">55 €</div><div class="pl">4 mesi · al mese</div></div>
+          <div class="under-price"><div class="pn">65 €</div><div class="pl">Flex · al mese</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DROP-IN -->
+  <section class="drop section glow-tr">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Singoli Accessi</div>
+          <h2 class="reveal">Prenota, paga, <em>allenati</em>.</h2>
+        </div>
+        <div class="reveal" data-delay="1" style="font-family:var(--f-display);text-transform:uppercase;letter-spacing:.10em;font-size:13px;font-weight:700;color:rgba(255,255,255,.65);max-width:36ch;text-align:right">Niente quota attivazione · Badge accesso una tantum 5€</div>
+      </div>
+      <div class="drop-grid">
+        {dropIn.map((d, i) => (
+          <a href={productLink(d.data.productId)} target="_blank" rel="noopener" class="drop-card reveal" data-delay={i}>
+            <h3>{d.data.title}</h3>
+            <div class="drop-price">{d.data.price} €</div>
+            <div class="drop-meta">{d.data.meta}</div>
+            <div class="drop-note">{d.data.note}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONAL TRAINING -->
+  <section class="pt section glow-bl">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Personal Training</div>
+          <h2 class="reveal">Pacchetti <em>I Love My Trainer</em>.</h2>
+        </div>
+        <div class="reveal" data-delay="1" style="font-family:var(--f-display);text-transform:uppercase;letter-spacing:.10em;font-size:13px;font-weight:700;color:rgba(255,255,255,.65);max-width:36ch;text-align:right">Validità 365 (10 sed.) · 180 (5 sed.) · 30 giorni (singola)</div>
+      </div>
+      <div class="pt-grid">
+        {ptPackages.map((p, i) => (
+          <div class:list={["pt-card", "reveal", p.data.isPro && "is-pro"]} data-delay={i}>
+            <div class="pt-num">Pacchetto {p.data.num}</div>
+            <h3>{p.data.title}</h3>
+            <div class="pt-tag">{p.data.tag}</div>
+            <ul class="pt-rows">
+              <li><span class="pt-dur">60 minuti</span><span class="pt-prc">{p.data.price60} €</span></li>
+              <li><span class="pt-dur">40 minuti</span><span class="pt-prc">{p.data.price40} €</span></li>
+              <li><span class="pt-dur">30 minuti</span><span class="pt-prc">{p.data.price30} €</span></li>
+            </ul>
+            <a href={productLink(p.data.productId)} target="_blank" rel="noopener" class="btn">Acquista →</a>
+            <div class="plan-fine">Utilizzabili entro {p.data.validityDays} giorni dall'acquisto</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq section glow-tl" id="faq">
+    <div class="wrap">
+      <div class="faq-grid">
+        <div class="reveal">
+          <div class="eyebrow">FAQ · Domande frequenti</div>
+          <h2>Quello che <em>tutti</em> chiedono.</h2>
+          <p style="margin-top:18px;color:rgba(255,255,255,.78);font-size:15.5px;max-width:38ch">Le risposte alle domande più comuni su pagamenti, certificato medico, prenotazioni e sospensioni. Se non trovi quello che cerchi, scrivici.</p>
+          <a href="#contatti" class="btn btn--ghost btn--sm" style="margin-top:24px">Scrivici →</a>
+        </div>
+        <ul class="faq-list reveal" data-delay="1">
+          <details>
+            <summary>Come posso pagare il mio Abbonamento?</summary>
+            <div class="faq-body">Le modalità di pagamento accettate sono <strong>addebito su carta di pagamento</strong> (credito o debito) e <strong>addebito su conto corrente</strong> (IBAN). Il pagamento è mensile, automatico, senza commissioni aggiuntive.</div>
+          </details>
+          <details>
+            <summary>Ho bisogno del certificato medico?</summary>
+            <div class="faq-body">Sì, è richiesto il <strong>certificato di idoneità alla pratica sportiva non agonistica</strong>, da inviare entro due settimane dalla prima lezione.</div>
+          </details>
+          <details>
+            <summary>Dove trovo gli orari delle lezioni?</summary>
+            <div class="faq-body">Gli orari e il calendario delle lezioni sono aggiornati ogni mese e sono visibili sull'<strong>App di Passion Fitness</strong> e sulla <a href="/orari">pagina orari</a>. Nel periodo estivo (giugno-settembre) il planning può subire variazioni.</div>
+          </details>
+          <details>
+            <summary>Come prenoto le lezioni e i servizi?</summary>
+            <div class="faq-body">Le prenotazioni si fanno direttamente dal tesserato attraverso il proprio <strong>account web via browser o tramite l'App di Passion Fitness</strong>.</div>
+          </details>
+          <details>
+            <summary>Posso sospendere l'abbonamento?</summary>
+            <div class="faq-body">Sì. Ogni abbonamento prevede la possibilità di sospensione <strong>per mese solare</strong>, al costo di 15€ al mese. Le sospensioni partono dal primo giorno del mese e devono essere richieste almeno 10 giorni prima. Sono <strong>illimitate</strong>.</div>
+          </details>
+          <details>
+            <summary>Come si disdice un abbonamento?</summary>
+            <div class="faq-body">Al termine della durata minima (12, 4 o 1 mese a seconda del piano), puoi disdire l'abbonamento direttamente dalla tua <strong>area riservata online</strong>.</div>
+          </details>
+          <details>
+            <summary>L'abbonamento Open include tutto?</summary>
+            <div class="faq-body">Sì. Il piano Open dà accesso senza limiti orari a <strong>Reformer Pilates, CrossFit, Sala Pesi e Corsi Fitness</strong> (Rebalance ed Energy), oltre a tutte le aree della palestra: Cardio, Pesi/Isotonica, Calisthenics, Boxing, Power Plate.</div>
+          </details>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <TryOut
+    eyebrow="Prova la palestra · Gratis"
+    title="Prima <em>provala</em>, poi scegli."
+    text="Fissa una visita guidata della palestra o prenota una lezione di prova gratuita. Niente pressione, niente venditori, solo la voglia di farti vedere cosa siamo. Poi decidi tu."
+    ctaPrimary={{ label: "Prenota la prova →", href: "/#prova" }}
+    ctaSecondary={{ label: "Vedi tutte le discipline", href: "/corsi" }}
+    tags={["Prezzi trasparenti", "Sospensioni illimitate", "Disdetta online", "Quota 60€ una tantum", "Pagamento mensile"]}
+    glow="br"
+  />
+</Base>
+
+<style>
+  /* Plans */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .plan-card {
+    background: linear-gradient(140deg, rgba(225,29,46,.16) 0%, rgba(225,29,46,.04) 100%);
+    border: 1px solid rgba(225,29,46,.28);
+    padding: clamp(28px,3vw,40px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    backdrop-filter: blur(6px);
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .plan-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+    background: linear-gradient(140deg, rgba(225,29,46,.22) 0%, rgba(225,29,46,.06) 100%);
+  }
+  .plan-card::before { content: ""; position: absolute; top: 0; left: 0; width: 48px; height: 3px; background: var(--c-accent); }
+  .plan-card.is-pro {
+    background: linear-gradient(140deg, rgba(225,29,46,.36) 0%, rgba(155,19,32,.12) 100%);
+    border-color: rgba(225,29,46,.55);
+  }
+  .plan-card.is-pro::before { background: #fff; }
+  .plan-num { font-family: var(--f-display); font-weight: 900; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 14px; }
+  .plan-card h3 { font-family: var(--f-display); font-weight: 900; text-transform: uppercase; font-size: clamp(30px,3vw,42px); line-height: 1; letter-spacing: -.015em; margin-bottom: 8px; color: #fff; }
+  .plan-tag { font-family: var(--f-display); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 24px; }
+  .plan-card.is-pro .plan-tag { color: #fff; }
+  .plan-best { display: inline-block; font-family: var(--f-display); font-weight: 800; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #fff; background: var(--c-accent); padding: 5px 11px; margin-bottom: 14px; align-self: flex-start; }
+  .plan-card.is-pro .plan-best { background: #fff; color: var(--c-accent-deep); }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
+  .plan-price-num { font-family: var(--f-display); font-weight: 900; font-size: clamp(56px,7vw,86px); line-height: .85; letter-spacing: -.025em; color: #fff; }
+  .plan-price-cur { font-family: var(--f-display); font-weight: 700; font-size: 22px; color: rgba(255,255,255,.65); }
+  .plan-price-sub { font-family: var(--f-display); text-transform: uppercase; font-weight: 700; font-size: 13px; letter-spacing: .14em; color: rgba(255,255,255,.7); margin-bottom: 22px; }
+  .plan-altprices { margin-bottom: 24px; border-top: 1px solid rgba(255,255,255,.15); padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .plan-altprices-row { display: flex; justify-content: space-between; align-items: center; font-family: var(--f-display); text-transform: uppercase; letter-spacing: .10em; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.78); }
+  .plan-altprices-row .pp { color: #fff; font-weight: 800; }
+  .plan-incl { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.15); }
+  .plan-incl li { font-family: var(--f-display); text-transform: uppercase; font-weight: 600; font-size: 13px; letter-spacing: .10em; color: rgba(255,255,255,.85); display: flex; align-items: flex-start; gap: 10px; }
+  .plan-incl li::before { content: ""; width: 5px; height: 5px; background: var(--c-accent); flex-shrink: 0; border-radius: 50%; margin-top: 6px; }
+  .plan-card.is-pro .plan-incl li::before { background: #fff; }
+  .plan-foot { margin-top: auto; }
+  .plan-fine { font-family: var(--f-display); text-transform: uppercase; font-size: 11px; letter-spacing: .10em; color: rgba(255,255,255,.55); margin-top: 14px; line-height: 1.5; }
+  @media (max-width: 900px) { .plans-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+  /* Under 25 */
+  .under { padding: clamp(60px,7vw,90px) 0; overflow: hidden; }
+  .under-card {
+    background: linear-gradient(120deg, rgba(225,29,46,.40) 0%, rgba(155,19,32,.18) 60%, rgba(10,10,10,.6) 100%);
+    border: 1px solid rgba(225,29,46,.55);
+    padding: clamp(36px,5vw,60px);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(30px,4vw,60px);
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .under-card::before { content: ""; position: absolute; top: 0; left: 0; height: 4px; width: 88px; background: #fff; }
+  .under-eyebrow { font-family: var(--f-display); font-weight: 800; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #fff; margin-bottom: 14px; opacity: .85; }
+  .under-card h2 { color: #fff; max-width: 18ch; margin-bottom: 14px; }
+  .under-card h2 em { color: #fff; -webkit-text-stroke: 1.5px var(--c-accent-deep); }
+  .under-card p { color: rgba(255,255,255,.92); font-size: 15.5px; max-width: 48ch; margin-bottom: 24px; }
+  .under-prices { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+  .under-price { background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.2); padding: 20px; }
+  .under-price .pn { font-family: var(--f-display); font-weight: 900; font-size: 36px; line-height: 1; color: #fff; margin-bottom: 6px; }
+  .under-price .pl { font-family: var(--f-display); text-transform: uppercase; font-size: 11px; letter-spacing: .14em; color: rgba(255,255,255,.85); font-weight: 600; }
+  @media (max-width: 900px) { .under-card { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .under-prices { grid-template-columns: 1fr; } }
+
+  /* Drop-in */
+  .drop-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .drop-card {
+    background: linear-gradient(140deg, rgba(225,29,46,.14) 0%, rgba(225,29,46,.03) 100%);
+    border: 1px solid rgba(225,29,46,.25);
+    padding: clamp(22px,2.5vw,30px);
+    position: relative;
+    transition: border-color .25s, transform .25s, background .25s;
+    text-decoration: none;
+  }
+  .drop-card:hover { border-color: var(--c-accent); transform: translateY(-4px); background: linear-gradient(140deg, rgba(225,29,46,.22) 0%, rgba(225,29,46,.06) 100%); }
+  .drop-card::before { content: ""; position: absolute; top: 0; left: 0; width: 42px; height: 3px; background: var(--c-accent); }
+  .drop-card h3 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(20px,2vw,26px); margin-bottom: 14px; color: #fff; line-height: 1; }
+  .drop-price { font-family: var(--f-display); font-weight: 900; font-size: clamp(40px,4.5vw,56px); line-height: .9; letter-spacing: -.02em; color: #fff; margin-bottom: 6px; }
+  .drop-meta { font-family: var(--f-display); text-transform: uppercase; font-size: 11px; letter-spacing: .12em; color: rgba(255,255,255,.7); font-weight: 600; margin-bottom: 18px; }
+  .drop-note { font-family: var(--f-display); text-transform: uppercase; font-size: 11px; letter-spacing: .10em; color: rgba(255,255,255,.5); font-weight: 600; }
+  @media (max-width: 900px) { .drop-grid { grid-template-columns: repeat(2,1fr); } }
+
+  /* PT */
+  .pt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+  .pt-card {
+    background: linear-gradient(140deg, rgba(225,29,46,.16) 0%, rgba(225,29,46,.04) 100%);
+    border: 1px solid rgba(225,29,46,.28);
+    padding: clamp(26px,3vw,38px);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .pt-card:hover { border-color: var(--c-accent); transform: translateY(-4px); background: linear-gradient(140deg, rgba(225,29,46,.22) 0%, rgba(225,29,46,.06) 100%); }
+  .pt-card::before { content: ""; position: absolute; top: 0; left: 0; width: 48px; height: 3px; background: var(--c-accent); }
+  .pt-card.is-pro { background: linear-gradient(140deg, rgba(225,29,46,.34) 0%, rgba(155,19,32,.12) 100%); border-color: rgba(225,29,46,.5); }
+  .pt-card.is-pro::before { background: #fff; }
+  .pt-num { font-family: var(--f-display); font-weight: 900; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.7); margin-bottom: 12px; }
+  .pt-card h3 { font-family: var(--f-display); font-weight: 800; text-transform: uppercase; font-size: clamp(24px,2.4vw,32px); line-height: 1; margin-bottom: 8px; color: #fff; }
+  .pt-tag { font-family: var(--f-display); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--c-accent); margin-bottom: 22px; }
+  .pt-card.is-pro .pt-tag { color: #fff; }
+  .pt-rows { list-style: none; display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,.15); margin-bottom: 22px; }
+  .pt-rows li { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.12); font-family: var(--f-display); text-transform: uppercase; }
+  .pt-dur { font-weight: 700; font-size: 14px; letter-spacing: .10em; color: rgba(255,255,255,.85); }
+  .pt-prc { font-weight: 900; font-size: 24px; letter-spacing: -.01em; color: #fff; }
+  @media (max-width: 900px) { .pt-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(30px,5vw,70px); align-items: flex-start; }
+  .faq-list { list-style: none; display: flex; flex-direction: column; border-top: 1px solid var(--c-line-2); }
+  .faq-list details { border-bottom: 1px solid var(--c-line-2); padding: 0; }
+  .faq-list summary { cursor: pointer; list-style: none; padding: 22px 0; font-family: var(--f-display); text-transform: uppercase; font-weight: 800; font-size: clamp(18px,2vw,22px); color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 18px; transition: color .2s; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary:hover { color: var(--c-accent); }
+  .faq-list summary::after { content: "+"; font-family: var(--f-display); font-weight: 800; font-size: 24px; color: var(--c-accent); transition: transform .3s ease; }
+  .faq-list details[open] summary::after { transform: rotate(45deg); }
+  .faq-list .faq-body { padding: 0 0 24px; font-size: 15px; color: rgba(255,255,255,.8); max-width: 64ch; line-height: 1.65; }
+  .faq-list .faq-body a { color: var(--c-accent); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; } }
+</style>
