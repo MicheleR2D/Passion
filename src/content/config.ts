@@ -102,7 +102,6 @@ const dropIn = defineCollection({
 const disciplines = defineCollection({
   type: "content",
   schema: z.object({
-    slug: z.string(),
     eyebrow: z.string(),
     title: z.string(),
     description: z.string(),

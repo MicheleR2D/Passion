@@ -91,16 +91,10 @@ h1 em, h2 em, h3 em, p em {
   line-height: 1;
   justify-self: start;
 }
-.logo-mark { width: 36px; height: 36px; flex-shrink: 0; }
-.logo-text { display: flex; flex-direction: column; line-height: .9; }
-.logo-text small {
-  font-family: var(--f-display);
-  font-weight: 500;
-  font-size: 10px;
-  letter-spacing: .2em;
-  color: var(--c-muted);
-  text-transform: uppercase;
-  margin-top: 3px;
+.logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
 }
 .nav-menu {
   display: flex;
@@ -132,9 +126,150 @@ h1 em, h2 em, h3 em, p em {
 .nav-menu a:hover::after,
 .nav-menu a.is-active::after { transform: scaleX(1); }
 .nav-cta { justify-self: end; }
+/* Hamburger button — hidden on desktop */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 60;
+}
+.nav-hamburger span {
+  display: block;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform .3s ease, opacity .2s ease, width .3s ease;
+}
+.nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+.nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(10, 10, 10, .97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.nav-drawer.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-drawer-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.nav-drawer-menu a {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(36px, 10vw, 56px);
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  color: #fff;
+  padding: 8px 20px;
+  transition: color .2s;
+}
+.nav-drawer-menu a:hover,
+.nav-drawer-menu a.is-active { color: var(--c-accent); }
+.nav-drawer-cta { margin-top: 8px; }
+
 @media (max-width: 960px) {
   .nav-inner { grid-template-columns: 1fr auto; }
   .nav-menu { display: none; }
+  .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+}
+
+/* ============= NAV DROPDOWN ============= */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-dropdown-trigger {
+  font-family: var(--f-display);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .14em;
+  font-size: 16px;
+  padding: 4px 0;
+  cursor: default;
+  position: relative;
+  transition: color .2s;
+  user-select: none;
+}
+.nav-dropdown-trigger::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--c-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.nav-dropdown:hover .nav-dropdown-trigger::after,
+.nav-dropdown.is-active .nav-dropdown-trigger::after { transform: scaleX(1); }
+
+.nav-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  background: rgba(10, 10, 10, .97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--c-line-2);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 100;
+}
+.nav-dropdown:hover .nav-dropdown-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-panel a {
+  font-family: var(--f-display);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: .12em;
+  font-size: 14px;
+  padding: 10px 20px;
+  transition: color .2s, background .2s;
+  color: rgba(255,255,255,.85);
+}
+.nav-dropdown-panel a:hover,
+.nav-dropdown-panel a.is-active {
+  color: var(--c-accent);
+  background: rgba(225, 29, 46, .08);
 }
 
 /* ============= BUTTONS ============= */

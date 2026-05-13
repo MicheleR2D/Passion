@@ -1,17 +1,16 @@
 ---
-import Base from "../layouts/Base.astro";
-import Breadcrumb from "../components/Breadcrumb.astro";
-import Hero from "../components/Hero.astro";
-import Stats from "../components/Stats.astro";
-import Manifesto from "../components/Manifesto.astro";
-import Feature from "../components/Feature.astro";
-import LevelsSection from "../components/LevelsSection.astro";
-import TryOut from "../components/TryOut.astro";
+import Base from "../../layouts/Base.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import Hero from "../../components/Hero.astro";
+import Stats from "../../components/Stats.astro";
+import Manifesto from "../../components/Manifesto.astro";
+import Feature from "../../components/Feature.astro";
+import LevelsSection from "../../components/LevelsSection.astro";
+import TryOut from "../../components/TryOut.astro";
 ---
-<Base title="Corsi Fitness" active="corsi">
+<Base title="Corsi Fitness" active="corsi-fitness">
   <Breadcrumb items={[
     { label: "Home", href: "/" },
-    { label: "Corsi", href: "/corsi" },
     { label: "Corsi Fitness" }
   ]} />
 
@@ -19,7 +18,7 @@ import TryOut from "../components/TryOut.astro";
     label="02 / Classes · Sala Rebalance + Energy"
     titleLine1="Corsi Fitness."
     titleLine2="Sessantasei classi, <em>due</em> sale."
-    subtitle="Sala Rebalance da 150 mq per i corsi di equilibrio (Pilates, Yoga, Stretching, Posturale) e Sala Energy da 250 mq per quelli di intensità (Spinning, BodyPump, GAG, HIIT). 250+ ore di lezioni al mese."
+    subtitle="+120h Rebalance (Pilates, Yoga, Posturale) e +130h Energy (Pump, Met-Con, Prepugilistica, Funzionale). 250+ ore di lezioni al mese, 66 classi a settimana."
     image="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1800&q=80&auto=format&fit=crop"
     imageAlt="Corsi Fitness Passion"
     ctaPrimary={{ label: "Vedi gli orari →", href: "/orari" }}
@@ -58,8 +57,8 @@ import TryOut from "../components/TryOut.astro";
           <div class="room-meta">
             <div class="room-eyebrow">Sala 01</div>
             <h3>Rebalance</h3>
-            <p>150 mq dedicati a Pilates Matwork, Yoga, Stretching, Posturale, Mobility, Body Mind. Pavimento tecnico, specchi, audio attenuato. Per chi cerca equilibrio.</p>
-            <div class="room-num"><strong>150</strong> mq</div>
+            <p>120+ ore dedicate a Pilates Matwork, Yoga, Stretching, Posturale, Mobility, Body Mind. Pavimento tecnico, specchi, audio attenuato. Per chi cerca equilibrio.</p>
+            <div class="room-num"><strong>120<em>+</em></strong> ore/mese</div>
           </div>
         </div>
         <div class="room-card reveal" data-delay="1">
@@ -69,8 +68,8 @@ import TryOut from "../components/TryOut.astro";
           <div class="room-meta">
             <div class="room-eyebrow">Sala 02</div>
             <h3>Energy</h3>
-            <p>250 mq di sala intensiva: Spinning con 30 bike Technogym, BodyPump, GAG, HIIT, Boxing, Functional, Step, Zumba. Audio premium, luci dinamiche.</p>
-            <div class="room-num"><strong>250</strong> mq</div>
+            <p>130+ ore di sala intensiva: Spinning con 30 bike Technogym, BodyPump, GAG, HIIT, Boxing, Functional, Prepugilistica, Met-Con. Audio premium, luci dinamiche.</p>
+            <div class="room-num"><strong>130<em>+</em></strong> ore/mese</div>
           </div>
         </div>
       </div>
