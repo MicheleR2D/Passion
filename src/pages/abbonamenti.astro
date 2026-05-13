@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+const b = import.meta.env.BASE_URL;
 import Breadcrumb from "../components/Breadcrumb.astro";
 import Hero from "../components/Hero.astro";
 import Stats from "../components/Stats.astro";
@@ -184,7 +185,7 @@ const productLink = (id: string) =>
           </details>
           <details>
             <summary>Dove trovo gli orari delle lezioni?</summary>
-            <div class="faq-body">Gli orari e il calendario delle lezioni sono aggiornati ogni mese e sono visibili sull'<strong>App di Passion Fitness</strong> e sulla <a href="/orari">pagina orari</a>. Nel periodo estivo (giugno-settembre) il planning può subire variazioni.</div>
+            <div class="faq-body">Gli orari e il calendario delle lezioni sono aggiornati ogni mese e sono visibili sull'<strong>App di Passion Fitness</strong> e sulla <a href={`${b}orari`}>pagina orari</a>. Nel periodo estivo (giugno-settembre) il planning può subire variazioni.</div>
           </details>
           <details>
             <summary>Come prenoto le lezioni e i servizi?</summary>

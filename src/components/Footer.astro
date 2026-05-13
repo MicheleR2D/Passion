@@ -1,5 +1,5 @@
 ---
-// Footer globale con sede + link grid
+const b = import.meta.env.BASE_URL;
 ---
 <footer id="contatti" class="glow-tr">
   <div class="foot-sede">
@@ -25,30 +25,28 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand">
-          <div class="logo">
-            <svg class="logo-mark"><use href="#pf-logo"/></svg>
-            <span class="logo-text">PASSION FITNESS<small>Tuscolana · Roma</small></span>
-          </div>
+          <a href={b} class="logo">
+            <img src={`${b}logo-passion.png`} srcset={`${b}logo-passion.png 1x, ${b}logo-passion@2x.png 2x`} alt="Passion Fitness Club" class="logo-img" width="175" height="86" loading="lazy" />
+          </a>
           <p>Via Tuscolana 1052, Roma. La palestra di quartiere delle zone Tuscolana, Cinecittà, Don Bosco e San Policarpo. Da trent'anni.</p>
         </div>
         <div>
           <h4>La Palestra</h4>
           <ul>
-            <li><a href="/#la-palestra">Chi siamo</a></li>
-            <li><a href="/corsi">I corsi</a></li>
-            <li><a href="/orari">Orari</a></li>
-            <li><a href="/abbonamenti">Abbonamenti</a></li>
+            <li><a href={`${b}#la-palestra`}>Chi siamo</a></li>
+            <li><a href={`${b}orari`}>Orari</a></li>
+            <li><a href={`${b}abbonamenti`}>Abbonamenti</a></li>
           </ul>
         </div>
         <div>
           <h4>Corsi &amp; Servizi</h4>
           <ul>
-            <li><a href="/sala-pesi">Sala Pesi</a></li>
-            <li><a href="/corsi-fitness">Corsi Fitness</a></li>
-            <li><a href="/pilates-reformer">Reformer Pilates</a></li>
-            <li><a href="/crossfit">CrossFit</a></li>
-            <li><a href="/hyrox">Hyrox</a></li>
-            <li><a href="/personal-training">Personal Training</a></li>
+            <li><a href={`${b}palestra/sala-pesi`}>Sala Pesi</a></li>
+            <li><a href={`${b}palestra/corsi-fitness`}>Corsi Fitness</a></li>
+            <li><a href={`${b}pilates-reformer`}>Reformer Pilates</a></li>
+            <li><a href={`${b}crossfit`}>CrossFit</a></li>
+            <li><a href={`${b}hyrox`}>Hyrox</a></li>
+            <li><a href={`${b}i-love-my-trainer`}>Personal Training</a></li>
           </ul>
         </div>
         <div>
