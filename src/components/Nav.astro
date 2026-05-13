@@ -1,21 +1,88 @@
 ---
-type Active = "home" | "corsi" | "orari" | "abbonamenti" | "";
+type Active = "home" | "sala-pesi" | "corsi-fitness" | "pilates-reformer" | "crossfit" | "hyrox" | "personal-training" | "orari" | "abbonamenti" | "";
 interface Props {
   active?: Active;
 }
 const { active = "" } = Astro.props;
+
+const disciplineActives = ["sala-pesi", "corsi-fitness", "pilates-reformer", "crossfit", "hyrox", "personal-training"];
+const isDiscipline = disciplineActives.includes(active);
 ---
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="/" class="logo">
-      <svg class="logo-mark"><use href="#pf-logo"/></svg>
-      <span class="logo-text">PASSION FITNESS<small>Tuscolana · Roma</small></span>
+      <img
+        src="/logo-passion.png"
+        srcset="/logo-passion.png 1x, /logo-passion@2x.png 2x"
+        alt="Passion Fitness Club"
+        class="logo-img"
+        width="175"
+        height="86"
+      />
     </a>
     <div class="nav-menu">
-      <a href="/corsi" class={active === "corsi" ? "is-active" : ""}>Corsi</a>
+      <div class={`nav-dropdown${isDiscipline ? " is-active" : ""}`}>
+        <span class="nav-dropdown-trigger">DISCIPLINE ▾</span>
+        <div class="nav-dropdown-panel">
+          <a href="/palestra/sala-pesi" class={active === "sala-pesi" ? "is-active" : ""}>Sala Pesi</a>
+          <a href="/palestra/corsi-fitness" class={active === "corsi-fitness" ? "is-active" : ""}>Corsi Fitness</a>
+          <a href="/pilates-reformer" class={active === "pilates-reformer" ? "is-active" : ""}>Pilates Reformer</a>
+          <a href="/crossfit" class={active === "crossfit" ? "is-active" : ""}>CrossFit Acquedotti</a>
+          <a href="/hyrox" class={active === "hyrox" ? "is-active" : ""}>Hyrox</a>
+          <a href="/i-love-my-trainer" class={active === "personal-training" ? "is-active" : ""}>Personal Training</a>
+        </div>
+      </div>
       <a href="/orari" class={active === "orari" ? "is-active" : ""}>Orari</a>
       <a href="/abbonamenti" class={active === "abbonamenti" ? "is-active" : ""}>Abbonamenti</a>
     </div>
     <div class="nav-cta"><a href="/#prova" class="btn">Prova Passion</a></div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-drawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+  <nav class="nav-drawer-menu">
+    <a href="/palestra/sala-pesi" class={active === "sala-pesi" ? "is-active" : ""}>Sala Pesi</a>
+    <a href="/palestra/corsi-fitness" class={active === "corsi-fitness" ? "is-active" : ""}>Corsi Fitness</a>
+    <a href="/pilates-reformer" class={active === "pilates-reformer" ? "is-active" : ""}>Pilates Reformer</a>
+    <a href="/crossfit" class={active === "crossfit" ? "is-active" : ""}>CrossFit</a>
+    <a href="/hyrox" class={active === "hyrox" ? "is-active" : ""}>Hyrox</a>
+    <a href="/i-love-my-trainer" class={active === "personal-training" ? "is-active" : ""}>Personal Training</a>
+    <a href="/orari" class={active === "orari" ? "is-active" : ""}>Orari</a>
+    <a href="/abbonamenti" class={active === "abbonamenti" ? "is-active" : ""}>Abbonamenti</a>
+  </nav>
+  <a href="/#prova" class="btn nav-drawer-cta">Prova Passion</a>
+</div>
+
+<script>
+  const hamburger = document.getElementById("nav-hamburger")!;
+  const drawer = document.getElementById("nav-drawer")!;
+
+  function openMenu() {
+    hamburger.classList.add("is-open");
+    hamburger.setAttribute("aria-expanded", "true");
+    drawer.classList.add("is-open");
+    drawer.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    hamburger.classList.remove("is-open");
+    hamburger.setAttribute("aria-expanded", "false");
+    drawer.classList.remove("is-open");
+    drawer.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  hamburger.addEventListener("click", () => {
+    hamburger.classList.contains("is-open") ? closeMenu() : openMenu();
+  });
+
+  drawer.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMenu();
+  });
+</script>

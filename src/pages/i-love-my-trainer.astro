@@ -20,19 +20,25 @@ const steps = [
   { num: "03", title: "Allenamento", desc: "Sessioni 1-on-1 con il trainer fianco a fianco", meta: "2 — 4 / settimana" },
   { num: "04", title: "Risultato", desc: "Test e foto di controllo ogni 8 settimane, debrief", meta: "Documentato" }
 ];
+
+const risultati = [
+  { nome: "Adriano", eta: 51, giorni: 3, mesi: 8, calo: 15 },
+  { nome: "Alessandra", eta: 51, giorni: 2, mesi: 4, calo: 10 },
+  { nome: "Anna", eta: 27, giorni: 3, mesi: 3, calo: 11 },
+  { nome: "Claudio", eta: 37, giorni: 2, mesi: 3, calo: 8 },
+];
 ---
-<Base title="Personal Training" active="corsi">
+<Base title="I Love My Trainer" active="personal-training">
   <Breadcrumb items={[
     { label: "Home", href: "/" },
-    { label: "Corsi", href: "/corsi" },
-    { label: "Personal Training" }
+    { label: "I Love My Trainer" }
   ]} />
 
   <Hero
     label="06 / 1-on-1 · I Love My Trainer"
-    titleLine1="Personal."
+    titleLine1="I Love My Trainer."
     titleLine2="L'allenamento <em>cucito</em> addosso."
-    subtitle="Un trainer dedicato, una scheda che cambia ogni settimana, un obiettivo concreto. Si allena fianco a fianco, non da bordo campo. Abbonamento alla palestra incluso, perché il programma vive sette giorni su sette."
+    subtitle="Con I Love My Trainer acquisti il personal trainer e hai in omaggio l'abbonamento in palestra. Un trainer dedicato, una scheda che cambia ogni settimana, un obiettivo concreto. Si allena fianco a fianco, non da bordo campo."
     image="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1800&q=80&auto=format&fit=crop"
     imageAlt="Personal Training I Love My Trainer"
     ctaPrimary={{ label: "Prenota la valutazione →", href: "/#prova" }}
@@ -126,22 +132,27 @@ const steps = [
     ]}
   />
 
-  <Feature
-    eyebrow="Per chi"
-    title="Risultati <em>documentati</em>, non promessi."
-    paragraph="Foto di partenza, test di forza, plicometria. Ogni otto settimane si rifà la fotografia. Il prima e dopo non è uno slogan da bacheca social: è uno strumento di lavoro che racconta dove stiamo andando. Se i numeri non si muovono, il programma cambia."
-    rows={[
-      { label: "Vuole rimettersi in forma", value: "Sì" },
-      { label: "Ricomposizione corporea", value: "Sì" },
-      { label: "Recupero da infortunio", value: "Sì" },
-      { label: "Preparazione gara", value: "Sì" },
-      { label: "Mai allenato in vita sua", value: "Sì, perfetto" }
-    ]}
-    image="https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1400&q=80&auto=format&fit=crop"
-    imageAlt="Risultati documentati"
-    reverse
-    glow="bl"
-  />
+  <!-- RISULTATI DOCUMENTATI -->
+  <section class="section glow-bl">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow reveal">Per chi</div>
+          <h2 class="reveal">Risultati <em>documentati</em>, non promessi.</h2>
+        </div>
+      </div>
+      <div class="risultati-grid">
+        {risultati.map((r, i) => (
+          <div class="risultato-card reveal" data-delay={i % 4}>
+            <div class="risultato-calo">-{r.calo} <span>kg</span></div>
+            <div class="risultato-nome">{r.nome}</div>
+            <div class="risultato-meta">{r.eta} anni · {r.giorni} gg/sett · {r.mesi} mesi</div>
+          </div>
+        ))}
+      </div>
+      <p class="risultati-note reveal">Foto di partenza, test di forza, plicometria. Ogni otto settimane si rifà la fotografia. Se i numeri non si muovono, il programma cambia.</p>
+    </div>
+  </section>
 
   {testimonials.length > 0 && (
     <TestimonialsSection
@@ -225,4 +236,61 @@ const steps = [
   }
   @media (max-width: 900px) { .method-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .method-grid { grid-template-columns: 1fr; } }
+
+  /* Risultati documentati */
+  .risultati-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .risultato-card {
+    background: linear-gradient(140deg, rgba(225, 29, 46, .16) 0%, rgba(225, 29, 46, .04) 100%);
+    border: 1px solid rgba(225, 29, 46, .28);
+    padding: clamp(20px, 2.4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color .25s, transform .25s;
+  }
+  .risultato-card:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-4px);
+  }
+  .risultato-calo {
+    font-family: var(--f-display);
+    font-weight: 900;
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: .9;
+    letter-spacing: -.03em;
+    color: var(--c-accent);
+  }
+  .risultato-calo span {
+    font-size: .55em;
+    color: #fff;
+  }
+  .risultato-nome {
+    font-family: var(--f-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(18px, 2vw, 24px);
+    letter-spacing: -.01em;
+    color: #fff;
+  }
+  .risultato-meta {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--c-muted);
+  }
+  .risultati-note {
+    color: rgba(255, 255, 255, .7);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 680px;
+  }
+  @media (max-width: 900px) { .risultati-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .risultati-grid { grid-template-columns: 1fr; } }
 </style>
