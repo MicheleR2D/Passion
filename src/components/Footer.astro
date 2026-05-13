@@ -1,5 +1,6 @@
 ---
-const b = import.meta.env.BASE_URL;
+const raw = import.meta.env.BASE_URL;
+const b = raw.endsWith("/") ? raw : raw + "/";
 ---
 <footer id="contatti" class="glow-tr">
   <div class="foot-sede">
